@@ -10,14 +10,158 @@
 <atom:link href="https://erhchihsu.github.io/echsu/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Health and Long-Term Care</description>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Invalid Date</lastBuildDate>
+<lastBuildDate>Wed, 04 Jun 2025 04:00:00 GMT</lastBuildDate>
 <item>
   <title></title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/</link>
+  <link>https://erhchihsu.github.io/echsu/posts/2025-06-04-variance_estimation/</link>
   <description><![CDATA[ undefined ]]></description>
+  <guid>https://erhchihsu.github.io/echsu/posts/2025-06-04-variance_estimation/</guid>
+  <pubDate>Wed, 04 Jun 2025 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Lecture 1 Complex Survey Data 101</title>
+  <dc:creator>Erh-Chi Hsu</dc:creator>
+  <link>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><strong>Topic:</strong> Methods in Analysis of Large Population Surveys<br>
+<strong>Instructor:</strong> Dr.&nbsp;Saifuddin Ahmed<br>
+<strong>Note Taker:</strong> Erh-Chi Hsu</p>
+<hr>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This course focuses on the analysis of <strong>complex survey data</strong>, which differ from simple random sampling (SRS). Most national surveys use <strong>multistage, stratified, and clustered</strong> sampling designs, requiring special statistical approaches.</p>
+<hr>
+</section>
+<section id="survey-design-types" class="level2">
+<h2 class="anchored" data-anchor-id="survey-design-types">Survey Design Types</h2>
+<ul>
+<li><p><strong>Simple Random Sampling (SRS):</strong> With or without replacement (SRSWR/SRSWOR)</p>
+<ul>
+<li>In practice SRSWR is not attractive: we do not want to interview same individuals more than once. But, in mathematical term it is much simpler to relate the sample to population by SRSWR.</li>
+<li>SRSWOR provides two additional advantages:
+<ul>
+<li>elements are not repeated</li>
+<li>variance estimation is smaller (than SRSWR with same sample size).</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Systematic Sampling:</strong> Only the first unit is selected at random, the rest being selected according to a predetermined pattern</p>
+<ul>
+<li>It is close to SRS.</li>
+<li>Intraclass correlation could affect systematic sampling.</li>
+</ul></li>
+<li><p><strong>Stratified Sampling:</strong> Population divided into mutually exclusive strata (e.g., region, race) – increases precision</p>
+<ul>
+<li>Provides opportunity to study the stratum variations - estimation could be made for each stratum</li>
+<li>Total variance = between-stratum variance + within-stratum variance</li>
+<li>In stratified sampling design only “variance within” is considered</li>
+<li>Varinace within &lt; total variance: Variance estimation from stratified sampling is lower than the variance estimated from SRS of equal sample size</li>
+</ul></li>
+<li><p><strong>Cluster Sampling:</strong> Population divided into natural groups (e.g., villages); cost-effective but increases variance</p>
+<ul>
+<li>The cluster sampling is less efficient</li>
+<li>The <strong>total variance</strong> is the sum of within-cluster and between-cluster variances: <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20%5Csigma_w%5E2%20+%20%5Csigma_b%5E2"></li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BDeff%7D%20=%201%20+%20(M%20-%201)%5Crho">
+<ul>
+<li>( M ) is the average number of individuals per cluster</li>
+<li>( ) is the <strong>intra-class correlation coefficient (ICC)</strong></li>
+</ul></li>
+<li>In cluster sampling, variance depends on: <strong>cluster size</strong>, and <strong>ICC</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="two-methods-of-conducting-surveys" class="level2">
+<h2 class="anchored" data-anchor-id="two-methods-of-conducting-surveys">Two Methods of Conducting Surveys</h2>
+<ul>
+<li><p><strong>Single-stage</strong> sampling design</p></li>
+<li><p><strong>Multi-stage</strong> sampling design: The estimation formula of variance becomes “too complicated” or no longer possible in “closed form” - need to use the following to estimate variance</p>
+<ul>
+<li>“Approximate methods” (e.g, Taylor linearization method), or</li>
+<li>“Replicated sampling” (e.g, jackknife method)</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key Concepts</h2>
+<ul>
+<li><strong>Design Effect (deff):</strong> Ratio of variance from complex design to SRS
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?deff%20=%20%5Cfrac%7B%5Ctext%7BVariance%20estimate%20from%20the%20designed%20/%20implemented%20survey%7D%7D%7B%5Ctext%7BVariance%20estimate%20from%20SRS%20with%20same%20number%20of%20sample%20elements%7D%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?deft%20=%20%5Csqrt%7Bdeff%7D%20=%20%5Cfrac%7B%5Ctext%7BSE(estimate%20from%20the%20designed%20/%20implemented%20survey)%7D%7D%7B%5Ctext%7BSE(estimate%20from%20SRS%20with%20same%20number%20of%20sample%20elements)%7D%7D"></li>
+<li><strong>deff &gt; 1</strong> → Less efficient → more uncertainty in estimates (clustering or unequal weights inflate variance)</li>
+<li><strong>deff &lt; 1</strong> → More efficient → better precision</li>
+<li>We want <strong>deff</strong> to be SMALLER!</li>
+</ul></li>
+<li><strong>Intraclass Correlation (ICC):</strong> Measures similarity within clusters</li>
+<li><strong>Weights:</strong> Adjust for unequal sampling probability</li>
+<li><strong>Variance Estimation:</strong> Must account for design; ignoring it underestimates standard errors (SEs)</li>
+</ul>
+<hr>
+</section>
+<section id="why-variance-estimation-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-variance-estimation-matters">Why Variance Estimation Matters</h2>
+<ul>
+<li>Ignoring design leads to:
+<ul>
+<li>Underestimated standard errors</li>
+<li>Incorrect confidence intervals</li>
+<li>Misleading p-values</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="three-major-tasks-in-complex-survey-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="three-major-tasks-in-complex-survey-analysis">Three Major Tasks in Complex Survey Analysis</h2>
+<ol type="1">
+<li><strong>Account for survey design:</strong> strata, clusters, weights</li>
+<li><strong>Decide on weight usage:</strong> when and how to apply</li>
+<li><strong>Handle missing values:</strong> apply imputation or adjustment strategies</li>
+</ol>
+<hr>
+</section>
+<section id="outcome-types-models" class="level2">
+<h2 class="anchored" data-anchor-id="outcome-types-models">Outcome Types &amp; Models</h2>
+<ul>
+<li><strong>Continuous:</strong> Linear regression</li>
+<li><strong>Binary:</strong> Logistic / Log-binomial</li>
+<li><strong>Multinomial:</strong> Multinomial logit</li>
+<li><strong>Ordered:</strong> Ordered logistic regression</li>
+<li><strong>Count:</strong> Poisson</li>
+<li><strong>Time-to-event:</strong> Survival models</li>
+</ul>
+<hr>
+</section>
+<section id="stata-codes" class="level2">
+<h2 class="anchored" data-anchor-id="stata-codes">Stata Codes</h2>
+<ul>
+<li>Use <code>svy:</code> prefix to account for design (e.g., <code>svy: mean</code>, <code>svy: reg</code>)</li>
+<li><code>estat effects</code> gives DEFF and DEFT</li>
+<li><strong>Standard (SRS):</strong> <code>reg</code>, <code>logit</code></li>
+<li><strong>Design-based:</strong> <code>svy: reg</code>, <code>svy: logit</code></li>
+<li><strong>Robust SE:</strong> <code>, cluster(id)</code></li>
+<li><strong>GEE models:</strong> <code>xtgee</code></li>
+<li><strong>Multilevel models:</strong>
+<ul>
+<li>Random intercept: <code>xtlogit, re</code>, <code>xtmelogit</code></li>
+<li>Random slope: <code>xtmelogit ... || cluster: variable</code></li>
+</ul></li>
+<li><strong>Fixed effects:</strong> <code>xtlogit, fe</code></li>
+</ul>
+<hr>
+<p><em>End of Summary</em></p>
+
+
+</section>
+
+ ]]></description>
   <guid>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/</guid>
-  <pubDate>Invalid Date</pubDate>
+  <pubDate>Thu, 29 May 2025 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

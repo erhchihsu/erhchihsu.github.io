@@ -25,7 +25,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Lecture 1 Complex Survey Data 101\n\n\n\n\n\n\n\n\n\n\n\nInvalid Date\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
+    "text": "Lecture 2 Variance Estimation\n\n\n\n\n\n\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1 Complex Survey Data 101\n\n\n\n\n\n\n\n\n\n\n\nMay 29, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2025-05-29-complex_survey_101/index.html",
@@ -89,5 +89,40 @@
     "title": "Lecture 1 Complex Survey Data 101",
     "section": "Stata Codes",
     "text": "Stata Codes\n\nUse svy: prefix to account for design (e.g., svy: mean, svy: reg)\nestat effects gives DEFF and DEFT\nStandard (SRS): reg, logit\nDesign-based: svy: reg, svy: logit\nRobust SE: , cluster(id)\nGEE models: xtgee\nMultilevel models:\n\nRandom intercept: xtlogit, re, xtmelogit\nRandom slope: xtmelogit ... || cluster: variable\n\nFixed effects: xtlogit, fe\n\n\nEnd of Summary"
+  },
+  {
+    "objectID": "posts/2025-06-04-variance_estimation/index.html",
+    "href": "posts/2025-06-04-variance_estimation/index.html",
+    "title": "Lecture 2 Design Based Analysis",
+    "section": "",
+    "text": "Topic: Methods in Analysis of Large Population Surveys\nInstructor: Dr. Saifuddin Ahmed\nNote Taker: Erh-Chi Hsu"
+  },
+  {
+    "objectID": "posts/2025-06-04-variance_estimation/index.html#overview",
+    "href": "posts/2025-06-04-variance_estimation/index.html#overview",
+    "title": "Lecture 2 Design Based Analysis",
+    "section": "Overview",
+    "text": "Overview\nThis lecture focuses on variance estimation in complex survey designs. Standard statistical methods assume simple random sampling (SRS) and independent, identically distributed (IID) data. However, complex survey designs often violate IID assumptions, leading to incorrect standard errors and confidence intervals.\n\nWhy IID Assumptions Fail in Complex Surveys:\n\nClustering (Intraclass correlation): Individuals within clusters (e.g., households, communities) tend to be more similar to each other.\nDesign Effect (DEFF/DEFT): Variance inflation due to survey design.\nFinite Population Correction (FPC): When you sample from a small population without replacement, each selection slightly changes the remaining group, making your estimate more precise. Since most standard error formulas assume sampling with replacement, the Finite Population Correction (FPC) adjusts the standard error downward to account for this.\nMultistage Sampling: Involves stratification, clustering, and unequal probabilities.\nWeights: Sampling weights affect both point estimates and variance estimation."
+  },
+  {
+    "objectID": "posts/2025-06-04-variance_estimation/index.html#two-procedures-for-variance-estimation-in-complex-surveys",
+    "href": "posts/2025-06-04-variance_estimation/index.html#two-procedures-for-variance-estimation-in-complex-surveys",
+    "title": "Lecture 2 Design Based Analysis",
+    "section": "Two Procedures for Variance Estimation in Complex Surveys",
+    "text": "Two Procedures for Variance Estimation in Complex Surveys\nVariance estimation methods fall into two broad categories:\n\n\n1. Non-Parametric Procedures\nThese methods do not assume a specific distributional form and are applicable to both linear and non-linear statistics.\n\nTypes of Estimates:\n\nLinear: Mean, total\nNon-linear: Proportions, ratios, regression coefficients, medians, etc.\n\n\n\nReplication-Based Methods\nThese methods generate multiple pseudoreplicates and compute variance based on the variability across replicates.\n\n\nSimple Replication\nAlso known as the random groups method.\n\nDivide the sample into r independent groups.\nEstimate the statistic in each group.\nCompute variance as:\n\n\\[\nVar(\\hat{\\theta}) = \\frac{1}{r(r-1)}\\sum_{i=1}^{r}(\\hat{\\theta}_i - \\bar{\\theta})^2\n\\]\n\nLimitation: Not precise if r is small; rarely used in practice.\n\n\n\n\nBalanced Repeated Replication (BRR)\n\nWorks best with 2 PSUs per stratum.\nDivides each stratum into two halves.\nConstructs balanced half-samples using a Hadamard matrix:\n\nA square matrix of +1 and -1 where each row is orthogonal to others.\nEnsures each PSU is included in a balanced way across replicates.\n\n\nFormula:\n\\[\nVar_{BRR}(\\hat{\\theta}) = \\frac{1}{K} \\sum_{k=1}^K (\\hat{\\theta}_k - \\hat{\\theta})^2\n\\]\n\nUsed extensively in National Center for Health Statistics (NCHS) data.\n\n\n\n\nJackknife Replication\n\nSystematically drops one PSU at a time.\nFor each replicate:\n\nRecalculate the estimate after omitting one PSU.\nWeight the remaining data accordingly.\n\n\nFormula:\n\\[\nVar_{jack}(\\hat{\\theta}) = \\frac{n - 1}{n} \\sum_{i=1}^n (\\hat{\\theta}_{(i)} - \\bar{\\theta})^2\n\\]\n\nIf sample size = 500 → 500 replicates.\nCan be applied to any data.\nVery flexible and widely supported.\nDefault choice if unsure.\n\n\n\n\nBootstrap Methods\n\nResample from the original sample with replacement.\nYou choose the number of replicates (e.g., 100–1000).\nUsed for both linear and non-linear estimates.\n\nBootstrap Variance Formula:\n\\[\nVar_{boot}(\\hat{\\theta}) = \\frac{1}{B-1} \\sum_{b=1}^B (\\hat{\\theta}_b - \\bar{\\theta})^2\n\\]\n\nStandard deviation of replicate estimates = bootstrap SE.\nBased on Efron (1987), use at least 100 replicates (preferably 500+ with modern computing).\n\n\n\n\n\nLinearization-Based Methods\nAlso known as the Taylor Series Linearization or Delta Method.\n\nUsed to approximate variance of non-linear statistics by reducing them to linear ones.\nExpands a function ( G(X) ) around the mean ( ):\n\n\\[\nVar(G(X)) \\approx [G'(\\mu)]^2 \\cdot Var(X)\n\\]\n\nIn matrix form: Sandwich Estimator\nDefault in Stata and R’s survey package\n\n\n\n\n\n2. Parametric Variance Estimation\n\nBased on model-based assumptions, e.g., linear regression assumptions.\nLess preferred for complex survey data where design features must be honored."
+  },
+  {
+    "objectID": "posts/2025-06-04-variance_estimation/index.html#decision-making-guide",
+    "href": "posts/2025-06-04-variance_estimation/index.html#decision-making-guide",
+    "title": "Lecture 2 Design Based Analysis",
+    "section": "Decision-Making Guide",
+    "text": "Decision-Making Guide\n\nUse Linearization for most standard analyses (means, proportions, regression).\nUse Jackknife or Bootstrap when:\n\nYou have complex parameters (e.g., medians, ratios).\nYou need robust, design-independent methods.\n\nGo with defaults unless you have specific needs."
+  },
+  {
+    "objectID": "posts/2025-06-04-variance_estimation/index.html#when-writing-paper",
+    "href": "posts/2025-06-04-variance_estimation/index.html#when-writing-paper",
+    "title": "Lecture 2 Design Based Analysis",
+    "section": "When writing paper",
+    "text": "When writing paper\n\nT-test is not valid for complex surveys, instead, use “adjusted Wald test” to detect the mean difference\nChi-square is not valid for complex surveys, instead, use “Rao and Scott (1984) second-order corrected Chi-square”\n\n\nEnd of Summary"
   }
 ]
