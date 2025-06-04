@@ -25,7 +25,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Lecture 2 Variance Estimation\n\n\n\n\n\n\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1 Complex Survey Data 101\n\n\n\n\n\n\n\n\n\n\n\nMay 29, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
+    "text": "Lecture 2 Variance Estimation\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of variance estimation for complex survey from PFRH 712\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1: Overview of Multilevel and Longitudinal Data\n\n\n\n\n\n\nBiostat 655\n\n\n\nSummary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1 Complex Survey Data 101\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of the introduction to Complex Survey Data from PFRH 712\n\n\n\n\n\nMay 29, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2025-05-29-complex_survey_101/index.html",
@@ -124,5 +124,82 @@
     "title": "Lecture 2 Design Based Analysis",
     "section": "When writing paper",
     "text": "When writing paper\n\nT-test is not valid for complex surveys, instead, use “adjusted Wald test” to detect the mean difference\nChi-square is not valid for complex surveys, instead, use “Rao and Scott (1984) second-order corrected Chi-square”\n\n\nEnd of Summary"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html",
+    "href": "posts/2025-06-04-/index.html",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "",
+    "text": "Course: Biostat 655 – Analysis of Multilevel and Longitudinal Data\nInstructors: Dr. Zheyu Wang, Dr. Ji Soo Kim"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#course-information",
+    "href": "posts/2025-06-04-/index.html#course-information",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "",
+    "text": "Course: Biostat 655 – Analysis of Multilevel and Longitudinal Data\nInstructors: Dr. Zheyu Wang, Dr. Ji Soo Kim"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#overview",
+    "href": "posts/2025-06-04-/index.html#overview",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Overview",
+    "text": "Overview\nThis course introduces statistical methods for analyzing:\n\nMultilevel data: Observations nested within higher-level units (e.g., students within schools)\nLongitudinal data: Repeated measures over time from the same individuals"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#statistical-foundations",
+    "href": "posts/2025-06-04-/index.html#statistical-foundations",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Statistical Foundations",
+    "text": "Statistical Foundations\n\nLinear Regression Review\n\nModels the expected value of outcome ( Y ) given predictors ( X ):\n\\[\nE(Y|X) = \\beta_0 + \\beta_1X_1 + \\dots + \\beta_pX_p\n\\]\nAssumes independent errors (iid Gaussian)\n\n\n\nExtensions:\n\nANOVA/ANCOVA\nLinear & cubic splines\nGroup interactions"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#multilevel-model-basics",
+    "href": "posts/2025-06-04-/index.html#multilevel-model-basics",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Multilevel Model Basics",
+    "text": "Multilevel Model Basics\n\nNames: Mixed models, hierarchical models, random-effects models\nStructure: Level-1 (individuals) nested within Level-2 (e.g., families), etc.\nApplications: Health outcomes vary across multiple levels (e.g., person, family, neighborhood)\n\n\nExample: Alcohol Abuse\n\n\n\nLevel\nExample\n\n\n\n\nPerson\nGenetic predisposition\n\n\nFamily\nHousehold alcohol use\n\n\nNeighborhood\nAccess to bars\n\n\nSociety\nLegal/policy regulation\n\n\n\n\n\nNotation for Multilevel Data\n\nNested levels:\n\nLevel 1: Time\nLevel 2: Person\nLevel 3: Family\nLevel 4: Neighborhood\nLevel 5: State\n\n\nE.g.,\n\\(Y_{sijkt}\\) = outcome at time ( t ) for person ( k ), family ( j ), neighborhood ( i ), state ( s )\n\\(X_{sijkt}\\) = predictor at same unit\n\n\nSynonyms for Multilevel Models\n\nMixed effects model\nRandom effects model\nHierarchical model\nGrowth model\nMeta-analysis (special case)"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#longitudinal-multilevel",
+    "href": "posts/2025-06-04-/index.html#longitudinal-multilevel",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Longitudinal = Multilevel",
+    "text": "Longitudinal = Multilevel\n\nLongitudinal data = Time nested within individuals\nRepeated measures are correlated, requiring special models"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#core-questions",
+    "href": "posts/2025-06-04-/index.html#core-questions",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Core Questions",
+    "text": "Core Questions\n\nWhat questions do multilevel/longitudinal models answer?\n\nPopulation averages\nIndividual differences\nRelationships at multiple levels\n\nWhy are repeated measures correlated?\n\nSame person → similar outcomes across time\n\nWhat happens if we ignore that correlation?\n\nInvalid inferences\nPoor confidence intervals\nBiased results (especially with missing data)\n\nHow can we model it correctly?\n\nUse appropriate models (marginal or mixed)"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#types-of-models",
+    "href": "posts/2025-06-04-/index.html#types-of-models",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Types of Models",
+    "text": "Types of Models\n\nPopulation-Average (Marginal) Models\n\nFocus on overall mean structure\nModel mean, variance, and correlation separately\n\n\n\nSubject-Specific (Mixed Effects) Models\n\nInclude random effects\nModel individual-level variation\nCapture within-subject correlation directly"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#what-happens-if-we-ignore-correlation",
+    "href": "posts/2025-06-04-/index.html#what-happens-if-we-ignore-correlation",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "What Happens If We Ignore Correlation?",
+    "text": "What Happens If We Ignore Correlation?\n\nBiased or misleading inferences\nUnder/overestimated standard errors\nLess statistical power\nInvalid estimates, especially with missing data"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#key-takeaways",
+    "href": "posts/2025-06-04-/index.html#key-takeaways",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "Key Takeaways",
+    "text": "Key Takeaways\n\nMultilevel models account for:\n\nNested structure in real-world data\nCorrelation within clusters or individuals\n\nEssential for accurate inference in public health and longitudinal research\nIgnoring structure leads to:\n\nBias\nInvalid inference\nPoor policy or scientific decisions"
+  },
+  {
+    "objectID": "posts/2025-06-04-/index.html#references",
+    "href": "posts/2025-06-04-/index.html#references",
+    "title": "Lecture 1: Overview of Multilevel and Longitudinal Data",
+    "section": "References",
+    "text": "References\n\nDiggle et al. (2002). Analysis of Longitudinal Data\n\nRabe-Hesketh & Skrondal. Multilevel and Longitudinal Modeling Using Stata\n\nLecture slides by Dr. Zheyu Wang and Dr. Ji Soo Kim"
   }
 ]
