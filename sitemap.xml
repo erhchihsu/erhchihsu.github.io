@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://erhchihsu.github.io/echsu/index.html</loc>
-    <lastmod>2025-05-29T17:24:20.790Z</lastmod>
+    <lastmod>2025-06-04T18:46:57.184Z</lastmod>
   </url>
   <url>
     <loc>https://erhchihsu.github.io/echsu/blog.html</loc>
@@ -19,5 +19,13 @@
   <url>
     <loc>https://erhchihsu.github.io/echsu/posts/2025-06-04-/index.html</loc>
     <lastmod>2025-06-04T14:50:23.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/presentations/index.html</loc>
+    <lastmod>2025-06-04T18:57:45.736Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/publications/index.html</loc>
+    <lastmod>2025-06-04T19:13:07.345Z</lastmod>
   </url>
 </urlset>
