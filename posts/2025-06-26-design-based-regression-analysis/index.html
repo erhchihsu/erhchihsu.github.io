@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Erh-Chi Hsu">
-<meta name="dcterms.date" content="2025-06-04">
-<meta name="description" content="Summary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655">
+<meta name="dcterms.date" content="2025-06-26">
+<meta name="description" content="Introduction to design-based regression approaches for large population survey data using R, including linear, logistic, and log-binomial models, with a focus on correct model specification, diagnostics, and interpretation.">
 
-<title>Erh-Chi Hsu - Lecture 1: Overview of Multilevel and Longitudinal Data</title>
+<title>Erh-Chi Hsu - Lecture 3 Design Based Regression Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,39 +104,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Erh-Chi Hsu - Lecture 1: Overview of Multilevel and Longitudinal Data">
-<meta property="og:description" content="Summary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655">
+<meta property="og:title" content="Erh-Chi Hsu - Lecture 3 Design Based Regression Analysis">
+<meta property="og:description" content="Introduction to design-based regression approaches for large population survey data using R, including linear, logistic, and log-binomial models, with a focus on correct model specification, diagnostics, and interpretation.">
 <meta property="og:site_name" content="Erh-Chi Hsu">
 <meta property="og:locale" content="en_US">
 </head>
@@ -156,14 +161,14 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Lecture 1: Overview of Multilevel and Longitudinal Data</h1>
+      <h1 class="title">Lecture 3 Design Based Regression Analysis</h1>
                   <div>
         <div class="description">
-          Summary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655
+          Introduction to design-based regression approaches for large population survey data using R, including linear, logistic, and log-binomial models, with a focus on correct model specification, diagnostics, and interpretation.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Biostat 655</div>
+                <div class="quarto-category">PFRH 712</div>
               </div>
                   </div>
   </div>
@@ -181,7 +186,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 4, 2025</p>
+        <p class="date">June 26, 2025</p>
       </div>
     </div>
     
@@ -199,12 +204,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#course-information" id="toc-course-information" class="nav-link active" data-scroll-target="#course-information">Course Information</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#statistical-foundations" id="toc-statistical-foundations" class="nav-link" data-scroll-target="#statistical-foundations">Statistical Foundations</a></li>
-  <li><a href="#multilevel-model-basics" id="toc-multilevel-model-basics" class="nav-link" data-scroll-target="#multilevel-model-basics">Multilevel Model Basics</a></li>
-  <li><a href="#longitudinal-multilevel" id="toc-longitudinal-multilevel" class="nav-link" data-scroll-target="#longitudinal-multilevel">Longitudinal = Multilevel</a></li>
-  <li><a href="#core-questions" id="toc-core-questions" class="nav-link" data-scroll-target="#core-questions">Core Questions</a></li>
-  <li><a href="#types-of-models" id="toc-types-of-models" class="nav-link" data-scroll-target="#types-of-models">Types of Models</a></li>
-  <li><a href="#what-happens-if-we-ignore-correlation" id="toc-what-happens-if-we-ignore-correlation" class="nav-link" data-scroll-target="#what-happens-if-we-ignore-correlation">What Happens If We Ignore Correlation?</a></li>
+  <li><a href="#steps-for-fitting-a-model" id="toc-steps-for-fitting-a-model" class="nav-link" data-scroll-target="#steps-for-fitting-a-model">4 Steps for Fitting a Model</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -219,194 +219,248 @@ window.Quarto = {
 
 <section id="course-information" class="level2">
 <h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
-<p><strong>Course:</strong> Biostat 655 – Analysis of Multilevel and Longitudinal Data<br>
-<strong>Instructors:</strong> Dr.&nbsp;Zheyu Wang, Dr.&nbsp;Ji Soo Kim</p>
+<p><strong>Course:</strong> PFRH 712 - Methods in Analysis of Large Population Surveys<br>
+<strong>Instructor:</strong> Dr.&nbsp;Saifuddin Ahmed</p>
 <hr>
 </section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This course introduces statistical methods for analyzing:</p>
+<p>This lecture focuses on the principles and applications of <strong>design-based regression analysis</strong> using complex survey data in R. It introduces the correct use of <code>lm()</code>, <code>glm()</code>, and <code>svyglm()</code> functions with appropriate survey design using the <code>survey</code> package. It emphasizes best practices in model fitting, diagnostics, and interpretation, and highlights common pitfalls such as misuse of stepwise regression and pseudo R².</p>
+<hr>
+</section>
+<section id="steps-for-fitting-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="steps-for-fitting-a-model">4 Steps for Fitting a Model</h2>
+<section id="specify" class="level3">
+<h3 class="anchored" data-anchor-id="specify">1. Specify</h3>
 <ul>
-<li><strong>Multilevel data</strong>: Observations nested within higher-level units (e.g., students within schools)</li>
-<li><strong>Longitudinal data</strong>: Repeated measures over time from the same individuals</li>
+<li>Use literature and a <strong>conceptual framework</strong> to guide covariate selection<br>
+</li>
+<li><strong>Avoid stepwise regression</strong><br>
+&gt; “Stepwise variable selection is one of the most widely used and abused of all data analysis techniques.” – Frank Harrell<br>
+</li>
+<li>Use theory-driven or evidence-based model building</li>
 </ul>
 <hr>
 </section>
-<section id="statistical-foundations" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-foundations">Statistical Foundations</h2>
-<section id="linear-regression-review" class="level3">
-<h3 class="anchored" data-anchor-id="linear-regression-review">Linear Regression Review</h3>
-<ul>
-<li><p>Models the expected value of outcome ( Y ) given predictors ( X ):</p>
-<p><span class="math display">\[
-E(Y|X) = \beta_0 + \beta_1X_1 + \dots + \beta_pX_p
-\]</span></p></li>
-<li><p>Assumes independent errors (iid Gaussian)</p></li>
-</ul>
+<section id="fit" class="level3">
+<h3 class="anchored" data-anchor-id="fit">2. Fit</h3>
+<section id="linear-regression-with-survey-weights" class="level4">
+<h4 class="anchored" data-anchor-id="linear-regression-with-survey-weights">📘 Linear regression with survey weights</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the survey design</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>des <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>psu, <span class="at">strata =</span> <span class="sc">~</span>strata, <span class="at">weights =</span> <span class="sc">~</span>weight, <span class="at">data =</span> df)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear regression</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model_lm <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(gfr <span class="sc">~</span> cpr, <span class="at">design =</span> des)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="extensions" class="level3">
-<h3 class="anchored" data-anchor-id="extensions">Extensions:</h3>
-<ul>
-<li>ANOVA/ANCOVA</li>
-<li>Linear &amp; cubic splines</li>
-<li>Group interactions</li>
-</ul>
+<section id="logistic-regression-with-design" class="level4">
+<h4 class="anchored" data-anchor-id="logistic-regression-with-design">📘 Logistic regression with design</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary outcome model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model_logit <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(mcu <span class="sc">~</span> age <span class="sc">+</span> education, <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">quasibinomial</span>())</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_logit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="log-binomial-risk-ratio" class="level4">
+<h4 class="anchored" data-anchor-id="log-binomial-risk-ratio">📘 Log-binomial (risk ratio)</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_logbin <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(mcu <span class="sc">~</span> age <span class="sc">+</span> education, <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_logbin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="poisson-alternative-for-estimating-rr" class="level4">
+<h4 class="anchored" data-anchor-id="poisson-alternative-for-estimating-rr">📘 Poisson alternative for estimating RR</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_poisson <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(mcu <span class="sc">~</span> age <span class="sc">+</span> education, <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_poisson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 </section>
-<section id="multilevel-model-basics" class="level2">
-<h2 class="anchored" data-anchor-id="multilevel-model-basics">Multilevel Model Basics</h2>
+<section id="check-test" class="level3">
+<h3 class="anchored" data-anchor-id="check-test">3. Check / Test</h3>
+<section id="model-diagnostics-for-linear-models" class="level4">
+<h4 class="anchored" data-anchor-id="model-diagnostics-for-linear-models">📘 Model diagnostics for linear models</h4>
+<p><strong>Residual vs Fitted Plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_lm, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ Good fit if points scatter randomly around the horizontal line.</p>
+<p>❌ Poor fit if there’s a curve or funnel shape (non-linearity or heteroscedasticity).</p>
+<p><strong>Q-Q Plot (Normality of Residuals)</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_lm, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ Good fit if points lie approximately on the diagonal line.</p>
+<p>❌ Poor fit if points deviate at the ends (skewed distribution).</p>
+</section>
+<section id="heteroscedasticity-breusch-pagan-test" class="level4">
+<h4 class="anchored" data-anchor-id="heteroscedasticity-breusch-pagan-test">📘 Heteroscedasticity (Breusch-Pagan test)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(model_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    studentized Breusch-Pagan test
+
+data:  model_lm
+BP = 0.040438, df = 1, p-value = 0.8406</code></pre>
+</div>
+</div>
+<p>Interpretation:</p>
 <ul>
-<li><strong>Names</strong>: Mixed models, hierarchical models, random-effects models</li>
-<li><strong>Structure</strong>: Level-1 (individuals) nested within Level-2 (e.g., families), etc.</li>
-<li><strong>Applications</strong>: Health outcomes vary across multiple levels (e.g., person, family, neighborhood)</li>
+<li><p><strong>p &gt; 0.05</strong> → Homoscedasticity (good!)</p></li>
+<li><p><strong>p &lt; 0.05</strong> → Heteroscedasticity (bad — use robust SEs)</p></li>
 </ul>
-<section id="example-alcohol-abuse" class="level3">
-<h3 class="anchored" data-anchor-id="example-alcohol-abuse">Example: Alcohol Abuse</h3>
+</section>
+<section id="cooks-distance-outlier-detection" class="level4">
+<h4 class="anchored" data-anchor-id="cooks-distance-outlier-detection">📘 Cook’s Distance (outlier detection)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_lm, <span class="at">which =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<ul>
+<li>Points with <strong>Cook’s D &gt; 1</strong> may be <strong>influential</strong> and deserve review.</li>
+</ul>
+</section>
+<section id="goodness-of-fit-for-logistic-models" class="level4">
+<h4 class="anchored" data-anchor-id="goodness-of-fit-for-logistic-models">📘 Goodness-of-fit for logistic models</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model_logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(am <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars, <span class="at">family =</span> binomial)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_logit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = am ~ wt + hp, family = binomial, data = mtcars)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept) 18.86630    7.44356   2.535  0.01126 * 
+wt          -8.08348    3.06868  -2.634  0.00843 **
+hp           0.03626    0.01773   2.044  0.04091 * 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 43.230  on 31  degrees of freedom
+Residual deviance: 10.059  on 29  degrees of freedom
+AIC: 16.059
+
+Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Hosmer-Lemeshow test</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hoslem.test</span>(mtcars<span class="sc">$</span>am, <span class="fu">fitted</span>(model_logit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hosmer and Lemeshow goodness of fit (GOF) test
+
+data:  mtcars$am, fitted(model_logit)
+X-squared = 4.9517, df = 8, p-value = 0.7627</code></pre>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ p &gt; 0.05 = model fits well</p>
+<p>❌ p &lt; 0.05 = poor fit</p>
+</section>
+<section id="summary-table" class="level4">
+<h4 class="anchored" data-anchor-id="summary-table">Summary Table</h4>
 <table class="table">
 <thead>
 <tr class="header">
-<th>Level</th>
-<th>Example</th>
+<th>Diagnostic</th>
+<th>Good Fit</th>
+<th>Poor Fit</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Person</td>
-<td>Genetic predisposition</td>
+<td>Residual Plot</td>
+<td>Random scatter</td>
+<td>Curved / funnel shape</td>
 </tr>
 <tr class="even">
-<td>Family</td>
-<td>Household alcohol use</td>
+<td>Q-Q Plot</td>
+<td>Points near line</td>
+<td>Points deviate</td>
 </tr>
 <tr class="odd">
-<td>Neighborhood</td>
-<td>Access to bars</td>
+<td>Breusch-Pagan Test</td>
+<td>p &gt; 0.05</td>
+<td>p &lt; 0.05</td>
 </tr>
 <tr class="even">
-<td>Society</td>
-<td>Legal/policy regulation</td>
+<td>Cook’s Distance</td>
+<td>All &lt; 1</td>
+<td>Some &gt; 1</td>
+</tr>
+<tr class="odd">
+<td>Hosmer-Lemeshow Test</td>
+<td>p &gt; 0.05</td>
+<td>p &lt; 0.05</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="notation-for-multilevel-data" class="level3">
-<h3 class="anchored" data-anchor-id="notation-for-multilevel-data">Notation for Multilevel Data</h3>
-<ul>
-<li><strong>Nested levels</strong>:
-<ul>
-<li>Level 1: Time</li>
-<li>Level 2: Person</li>
-<li>Level 3: Family</li>
-<li>Level 4: Neighborhood</li>
-<li>Level 5: State</li>
-</ul></li>
-</ul>
-<p>E.g.,<br>
-<span class="math inline">\(Y_{sijkt}\)</span> = outcome at time ( t ) for person ( k ), family ( j ), neighborhood ( i ), state ( s )<br>
-<span class="math inline">\(X_{sijkt}\)</span> = predictor at same unit</p>
-</section>
-<section id="synonyms-for-multilevel-models" class="level3">
-<h3 class="anchored" data-anchor-id="synonyms-for-multilevel-models">Synonyms for Multilevel Models</h3>
-<ul>
-<li>Mixed effects model</li>
-<li>Random effects model</li>
-<li>Hierarchical model</li>
-<li>Growth model</li>
-<li>Meta-analysis (special case)</li>
-</ul>
+<section id="model-comparison-using-aicbic" class="level4">
+<h4 class="anchored" data-anchor-id="model-comparison-using-aicbic">📘 Model comparison using AIC/BIC</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(model_logit)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(model_logit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Use AIC/BIC to compare models: lower = better</strong></p>
 <hr>
 </section>
 </section>
-<section id="longitudinal-multilevel" class="level2">
-<h2 class="anchored" data-anchor-id="longitudinal-multilevel">Longitudinal = Multilevel</h2>
+<section id="interpret" class="level3">
+<h3 class="anchored" data-anchor-id="interpret">4. Interpret</h3>
 <ul>
-<li>Longitudinal data = <strong>Time nested within individuals</strong></li>
-<li>Repeated measures are <strong>correlated</strong>, requiring special models</li>
+<li><strong>R²</strong> in linear regression: Proportion of variance explained</li>
+<li><strong>Pseudo R²</strong> in logistic regression: Not equivalent to R² and should not be interpreted as such</li>
+<li><strong>Odds Ratio (OR):</strong> exp(b) from logistic regression</li>
 </ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(model_logit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Risk Ratio (RR):</strong> Use log-binomial or Poisson models with robust SEs</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(model_poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
-<section id="core-questions" class="level2">
-<h2 class="anchored" data-anchor-id="core-questions">Core Questions</h2>
-<ol type="1">
-<li>What questions do multilevel/longitudinal models answer?
-<ul>
-<li>Population averages</li>
-<li>Individual differences</li>
-<li>Relationships at multiple levels</li>
-</ul></li>
-<li>Why are repeated measures correlated?
-<ul>
-<li>Same person → similar outcomes across time</li>
-</ul></li>
-<li>What happens if we ignore that correlation?
-<ul>
-<li>Invalid inferences</li>
-<li>Poor confidence intervals</li>
-<li>Biased results (especially with missing data)</li>
-</ul></li>
-<li>How can we model it correctly?
-<ul>
-<li>Use appropriate models (marginal or mixed)</li>
-</ul></li>
-</ol>
-<hr>
-</section>
-<section id="types-of-models" class="level2">
-<h2 class="anchored" data-anchor-id="types-of-models">Types of Models</h2>
-<section id="population-average-marginal-models" class="level3">
-<h3 class="anchored" data-anchor-id="population-average-marginal-models">Population-Average (Marginal) Models</h3>
-<ul>
-<li>Focus on overall mean structure</li>
-<li>Model mean, variance, and correlation separately</li>
-</ul>
-</section>
-<section id="subject-specific-mixed-effects-models" class="level3">
-<h3 class="anchored" data-anchor-id="subject-specific-mixed-effects-models">Subject-Specific (Mixed Effects) Models</h3>
-<ul>
-<li>Include random effects</li>
-<li>Model individual-level variation</li>
-<li>Capture within-subject correlation directly</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="what-happens-if-we-ignore-correlation" class="level2">
-<h2 class="anchored" data-anchor-id="what-happens-if-we-ignore-correlation">What Happens If We Ignore Correlation?</h2>
-<ul>
-<li>Biased or misleading inferences</li>
-<li>Under/overestimated standard errors</li>
-<li>Less statistical power</li>
-<li>Invalid estimates, especially with missing data</li>
-</ul>
-<hr>
 </section>
 <section id="key-takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
 <ul>
-<li>Multilevel models account for:
-<ul>
-<li>Nested structure in real-world data</li>
-<li>Correlation within clusters or individuals</li>
-</ul></li>
-<li>Essential for accurate inference in public health and longitudinal research</li>
-<li>Ignoring structure leads to:
-<ul>
-<li>Bias</li>
-<li>Invalid inference</li>
-<li>Poor policy or scientific decisions</li>
-</ul></li>
+<li>Always use svydesign() and svyglm() when analyzing complex survey data in R</li>
+<li>Avoid stepwise regression—prefer theory-driven model building</li>
+<li>Validate model assumptions with residual plots and Goodness-of-Fit tests</li>
+<li>Use log-binomial or Poisson models to estimate risk ratios when outcomes are common</li>
+<li>AIC and BIC help compare model fit, especially when choosing between linear vs.&nbsp;polynomial or nested models</li>
 </ul>
 <hr>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>Diggle et al.&nbsp;(2002). <em>Analysis of Longitudinal Data</em><br>
-</li>
-<li>Rabe-Hesketh &amp; Skrondal. <em>Multilevel and Longitudinal Modeling Using Stata</em><br>
-</li>
-<li>Lecture slides by Dr.&nbsp;Zheyu Wang and Dr.&nbsp;Ji Soo Kim</li>
+<li>Lecture slides by Dr.&nbsp;Saifuddin Ahmed, PFRH 712 (2025)</li>
+<li>Lumley, T. (2010). <em>Complex Surveys: A Guide to Analysis Using R.</em> Wiley.</li>
+<li>Harrell, F. (2015). <em>Regression Modeling Strategies.</em> Springer.</li>
+<li>Hosmer, D., Lemeshow, S., &amp; Sturdivant, R. (2013). <em>Applied Logistic Regression.</em> Wiley.</li>
+<li>R packages: survey, lmtest, ResourceSelection, ggplot2, srvyr</li>
 </ul>
 
 

@@ -10,7 +10,417 @@
 <atom:link href="https://erhchihsu.github.io/echsu/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Health and Long-Term Care</description>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Wed, 04 Jun 2025 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 26 Jun 2025 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lecture 3 Design Based Regression Analysis</title>
+  <dc:creator>Erh-Chi Hsu</dc:creator>
+  <link>https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
+<p><strong>Course:</strong> PFRH 712 - Methods in Analysis of Large Population Surveys<br>
+<strong>Instructor:</strong> Dr.&nbsp;Saifuddin Ahmed</p>
+<hr>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This lecture focuses on the principles and applications of <strong>design-based regression analysis</strong> using complex survey data in R. It introduces the correct use of <code>lm()</code>, <code>glm()</code>, and <code>svyglm()</code> functions with appropriate survey design using the <code>survey</code> package. It emphasizes best practices in model fitting, diagnostics, and interpretation, and highlights common pitfalls such as misuse of stepwise regression and pseudo R².</p>
+<hr>
+</section>
+<section id="steps-for-fitting-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="steps-for-fitting-a-model">4 Steps for Fitting a Model</h2>
+<section id="specify" class="level3">
+<h3 class="anchored" data-anchor-id="specify">1. Specify</h3>
+<ul>
+<li>Use literature and a <strong>conceptual framework</strong> to guide covariate selection<br>
+</li>
+<li><strong>Avoid stepwise regression</strong><br>
+&gt; “Stepwise variable selection is one of the most widely used and abused of all data analysis techniques.” – Frank Harrell<br>
+</li>
+<li>Use theory-driven or evidence-based model building</li>
+</ul>
+<hr>
+</section>
+<section id="fit" class="level3">
+<h3 class="anchored" data-anchor-id="fit">2. Fit</h3>
+<section id="linear-regression-with-survey-weights" class="level4">
+<h4 class="anchored" data-anchor-id="linear-regression-with-survey-weights">📘 Linear regression with survey weights</h4>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(survey)</span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define the survey design</span></span>
+<span id="cb1-3">des <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">svydesign</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ids =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span>psu, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">strata =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span>strata, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">weights =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span>weight, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> df)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Linear regression</span></span>
+<span id="cb1-6">model_lm <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">svyglm</span>(gfr <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> cpr, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">design =</span> des)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(model_lm)</span></code></pre></div>
+</section>
+<section id="logistic-regression-with-design" class="level4">
+<h4 class="anchored" data-anchor-id="logistic-regression-with-design">📘 Logistic regression with design</h4>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Binary outcome model</span></span>
+<span id="cb2-2">model_logit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">svyglm</span>(mcu <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> age <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> education, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">design =</span> des, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">quasibinomial</span>())</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(model_logit)</span></code></pre></div>
+</section>
+<section id="log-binomial-risk-ratio" class="level4">
+<h4 class="anchored" data-anchor-id="log-binomial-risk-ratio">📘 Log-binomial (risk ratio)</h4>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">model_logbin <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">svyglm</span>(mcu <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> age <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> education, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">design =</span> des, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">binomial</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">link =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span>))</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(model_logbin)</span></code></pre></div>
+</section>
+<section id="poisson-alternative-for-estimating-rr" class="level4">
+<h4 class="anchored" data-anchor-id="poisson-alternative-for-estimating-rr">📘 Poisson alternative for estimating RR</h4>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">model_poisson <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">svyglm</span>(mcu <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> age <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> education, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">design =</span> des, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">poisson</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">link =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span>))</span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(model_poisson)</span></code></pre></div>
+<hr>
+</section>
+</section>
+<section id="check-test" class="level3">
+<h3 class="anchored" data-anchor-id="check-test">3. Check / Test</h3>
+<section id="model-diagnostics-for-linear-models" class="level4">
+<h4 class="anchored" data-anchor-id="model-diagnostics-for-linear-models">📘 Model diagnostics for linear models</h4>
+<p><strong>Residual vs Fitted Plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(model_lm, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">which =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ Good fit if points scatter randomly around the horizontal line.</p>
+<p>❌ Poor fit if there’s a curve or funnel shape (non-linearity or heteroscedasticity).</p>
+<p><strong>Q-Q Plot (Normality of Residuals)</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(model_lm, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">which =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ Good fit if points lie approximately on the diagonal line.</p>
+<p>❌ Poor fit if points deviate at the ends (skewed distribution).</p>
+</section>
+<section id="heteroscedasticity-breusch-pagan-test" class="level4">
+<h4 class="anchored" data-anchor-id="heteroscedasticity-breusch-pagan-test">📘 Heteroscedasticity (Breusch-Pagan test)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bptest</span>(model_lm)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    studentized Breusch-Pagan test
+
+data:  model_lm
+BP = 0.040438, df = 1, p-value = 0.8406</code></pre>
+</div>
+</div>
+<p>Interpretation:</p>
+<ul>
+<li><p><strong>p &gt; 0.05</strong> → Homoscedasticity (good!)</p></li>
+<li><p><strong>p &lt; 0.05</strong> → Heteroscedasticity (bad — use robust SEs)</p></li>
+</ul>
+</section>
+<section id="cooks-distance-outlier-detection" class="level4">
+<h4 class="anchored" data-anchor-id="cooks-distance-outlier-detection">📘 Cook’s Distance (outlier detection)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(model_lm, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">which =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretation:</p>
+<ul>
+<li>Points with <strong>Cook’s D &gt; 1</strong> may be <strong>influential</strong> and deserve review.</li>
+</ul>
+</section>
+<section id="goodness-of-fit-for-logistic-models" class="level4">
+<h4 class="anchored" data-anchor-id="goodness-of-fit-for-logistic-models">📘 Goodness-of-fit for logistic models</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">model_logit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glm</span>(am <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> wt <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> hp, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> mtcars, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family =</span> binomial)</span>
+<span id="cb10-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summary</span>(model_logit)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = am ~ wt + hp, family = binomial, data = mtcars)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept) 18.86630    7.44356   2.535  0.01126 * 
+wt          -8.08348    3.06868  -2.634  0.00843 **
+hp           0.03626    0.01773   2.044  0.04091 * 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 43.230  on 31  degrees of freedom
+Residual deviance: 10.059  on 29  degrees of freedom
+AIC: 16.059
+
+Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run Hosmer-Lemeshow test</span></span>
+<span id="cb12-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hoslem.test</span>(mtcars<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>am, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fitted</span>(model_logit))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hosmer and Lemeshow goodness of fit (GOF) test
+
+data:  mtcars$am, fitted(model_logit)
+X-squared = 4.9517, df = 8, p-value = 0.7627</code></pre>
+</div>
+</div>
+<p>Interpretation:</p>
+<p>✅ p &gt; 0.05 = model fits well</p>
+<p>❌ p &lt; 0.05 = poor fit</p>
+</section>
+<section id="summary-table" class="level4">
+<h4 class="anchored" data-anchor-id="summary-table">Summary Table</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Diagnostic</th>
+<th>Good Fit</th>
+<th>Poor Fit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Residual Plot</td>
+<td>Random scatter</td>
+<td>Curved / funnel shape</td>
+</tr>
+<tr class="even">
+<td>Q-Q Plot</td>
+<td>Points near line</td>
+<td>Points deviate</td>
+</tr>
+<tr class="odd">
+<td>Breusch-Pagan Test</td>
+<td>p &gt; 0.05</td>
+<td>p &lt; 0.05</td>
+</tr>
+<tr class="even">
+<td>Cook’s Distance</td>
+<td>All &lt; 1</td>
+<td>Some &gt; 1</td>
+</tr>
+<tr class="odd">
+<td>Hosmer-Lemeshow Test</td>
+<td>p &gt; 0.05</td>
+<td>p &lt; 0.05</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-comparison-using-aicbic" class="level4">
+<h4 class="anchored" data-anchor-id="model-comparison-using-aicbic">📘 Model comparison using AIC/BIC</h4>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AIC</span>(model_logit)</span>
+<span id="cb14-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">BIC</span>(model_logit)</span></code></pre></div>
+<p><strong>Use AIC/BIC to compare models: lower = better</strong></p>
+<hr>
+</section>
+</section>
+<section id="interpret" class="level3">
+<h3 class="anchored" data-anchor-id="interpret">4. Interpret</h3>
+<ul>
+<li><strong>R²</strong> in linear regression: Proportion of variance explained</li>
+<li><strong>Pseudo R²</strong> in logistic regression: Not equivalent to R² and should not be interpreted as such</li>
+<li><strong>Odds Ratio (OR):</strong> exp(b) from logistic regression</li>
+</ul>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coef</span>(model_logit))</span></code></pre></div>
+<ul>
+<li><strong>Risk Ratio (RR):</strong> Use log-binomial or Poisson models with robust SEs</li>
+</ul>
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coef</span>(model_poisson))</span></code></pre></div>
+<hr>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>Always use svydesign() and svyglm() when analyzing complex survey data in R</li>
+<li>Avoid stepwise regression—prefer theory-driven model building</li>
+<li>Validate model assumptions with residual plots and Goodness-of-Fit tests</li>
+<li>Use log-binomial or Poisson models to estimate risk ratios when outcomes are common</li>
+<li>AIC and BIC help compare model fit, especially when choosing between linear vs.&nbsp;polynomial or nested models</li>
+</ul>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Lecture slides by Dr.&nbsp;Saifuddin Ahmed, PFRH 712 (2025)</li>
+<li>Lumley, T. (2010). <em>Complex Surveys: A Guide to Analysis Using R.</em> Wiley.</li>
+<li>Harrell, F. (2015). <em>Regression Modeling Strategies.</em> Springer.</li>
+<li>Hosmer, D., Lemeshow, S., &amp; Sturdivant, R. (2013). <em>Applied Logistic Regression.</em> Wiley.</li>
+<li>R packages: survey, lmtest, ResourceSelection, ggplot2, srvyr</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>PFRH 712</category>
+  <guid>https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/</guid>
+  <pubDate>Thu, 26 Jun 2025 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title></title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
@@ -227,7 +637,6 @@
   <category>Biostat 655</category>
   <guid>https://erhchihsu.github.io/echsu/posts/2025-06-04-/</guid>
   <pubDate>Wed, 04 Jun 2025 04:00:00 GMT</pubDate>
-  <media:content url="https://erhchihsu.github.io/echsu/posts/2025-06-04-/lecture1_banner.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title></title>
