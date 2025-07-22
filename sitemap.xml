@@ -2,6 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://erhchihsu.github.io/echsu/index.html</loc>
-    <lastmod>2025-05-29T14:58:38.083Z</lastmod>
+    <lastmod>2025-07-22T19:59:02.997Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/blog.html</loc>
+    <lastmod>2025-05-29T21:47:41.562Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/index.html</loc>
+    <lastmod>2025-06-04T11:53:17.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/posts/2025-06-04-variance_estimation/index.html</loc>
+    <lastmod>2025-06-04T13:35:58.427Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/posts/2025-06-04-/index.html</loc>
+    <lastmod>2025-06-26T17:20:53.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/presentations/index.html</loc>
+    <lastmod>2025-06-04T18:57:45.736Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/publications/index.html</loc>
+    <lastmod>2025-06-04T19:13:07.345Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index.html</loc>
+    <lastmod>2025-06-26T20:53:42.509Z</lastmod>
+  </url>
+  <url>
+    <loc>https://erhchihsu.github.io/echsu/posts/2025-07-22-autocorrelation/index.html</loc>
+    <lastmod>2025-07-22T19:44:29.829Z</lastmod>
   </url>
 </urlset>
