@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Erh-Chi Hsu">
+<meta name="dcterms.date" content="2025-07-22">
+<meta name="description" content="Understanding autocorrelation and variance-covariance structures in longitudinal data">
+
+<title>Erh-Chi Hsu - Lecture 2: Autocorrelation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Erh-Chi Hsu - Lecture 2: Autocorrelation">
+<meta property="og:description" content="Understanding autocorrelation and variance-covariance structures in longitudinal data">
+<meta property="og:site_name" content="Erh-Chi Hsu">
+<meta property="og:locale" content="en_US">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Erh-Chi Hsu</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications"> 
+<span class="menu-text">Papers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../presentations"> 
+<span class="menu-text">Presentations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Lecture 2: Autocorrelation</h1>
+                  <div>
+        <div class="description">
+          Understanding autocorrelation and variance-covariance structures in longitudinal data
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Biostat 655</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="true">Erh-Chi Hsu</a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 22, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#course-information" id="toc-course-information" class="nav-link active" data-scroll-target="#course-information">Course Information</a></li>
+  <li><a href="#essential-concepts-from-lecture-1" id="toc-essential-concepts-from-lecture-1" class="nav-link" data-scroll-target="#essential-concepts-from-lecture-1">Essential Concepts from Lecture 1</a></li>
+  <li><a href="#autocorrelation" id="toc-autocorrelation" class="nav-link" data-scroll-target="#autocorrelation">Autocorrelation</a>
+  <ul class="collapse">
+  <li><a href="#variance-covariance-structure" id="toc-variance-covariance-structure" class="nav-link" data-scroll-target="#variance-covariance-structure">Variance-Covariance Structure</a></li>
+  <li><a href="#empirical-correlation-matrix-for-residuals" id="toc-empirical-correlation-matrix-for-residuals" class="nav-link" data-scroll-target="#empirical-correlation-matrix-for-residuals">Empirical Correlation Matrix for Residuals</a></li>
+  <li><a href="#estimating-acf" id="toc-estimating-acf" class="nav-link" data-scroll-target="#estimating-acf">Estimating ACF</a></li>
+  <li><a href="#autocovariance-matrix" id="toc-autocovariance-matrix" class="nav-link" data-scroll-target="#autocovariance-matrix">Autocovariance Matrix</a></li>
+  </ul></li>
+  <li><a href="#common-covariance-structures" id="toc-common-covariance-structures" class="nav-link" data-scroll-target="#common-covariance-structures">Common Covariance Structures</a>
+  <ul class="collapse">
+  <li><a href="#unstructured-raw" id="toc-unstructured-raw" class="nav-link" data-scroll-target="#unstructured-raw">1. Unstructured (Raw)</a></li>
+  <li><a href="#compound-symmetry-exchangeable" id="toc-compound-symmetry-exchangeable" class="nav-link" data-scroll-target="#compound-symmetry-exchangeable">2. Compound Symmetry (Exchangeable)</a></li>
+  <li><a href="#autoregressive-ar-1" id="toc-autoregressive-ar-1" class="nav-link" data-scroll-target="#autoregressive-ar-1">3. Autoregressive (AR-1)</a></li>
+  <li><a href="#toeplitz" id="toc-toeplitz" class="nav-link" data-scroll-target="#toeplitz">4. Toeplitz</a></li>
+  <li><a href="#banded-structures" id="toc-banded-structures" class="nav-link" data-scroll-target="#banded-structures">6. Banded Structures</a></li>
+  <li><a href="#heteroskedastic-models" id="toc-heteroskedastic-models" class="nav-link" data-scroll-target="#heteroskedastic-models">7. Heteroskedastic Models</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
+<p><strong>Course:</strong> Biostat 655 – Analysis of Multilevel and Longitudinal Data<br>
+<strong>Instructors:</strong> Dr.&nbsp;Zheyu Wang, Dr.&nbsp;Ji Soo Kim</p>
+<hr>
+</section>
+<section id="essential-concepts-from-lecture-1" class="level2">
+<h2 class="anchored" data-anchor-id="essential-concepts-from-lecture-1">Essential Concepts from Lecture 1</h2>
+<ul>
+<li>Decomposition of the association between X and Y into <strong>cross-sectional</strong> and <strong>longitudinal</strong> components:</li>
+</ul>
+<p><span class="math display">\[
+\begin{align}
+Y_{ij} &amp;= \beta_0 + \beta_1 x_{ij} + \epsilon_{ij} \\
+       &amp;= \beta_0 + \beta_1 (x_{ij} - x_{i1} + x_{i1}) + \epsilon_{ij} \\
+       &amp;= \beta_0 + \beta_1 x_{i1} + \beta_1 (x_{ij} - x_{i1}) + \epsilon_{ij} \\
+       &amp;= \beta_0 + \beta_C x_{i1} + \beta_L (x_{ij} - x_{i1}) + \epsilon_{ij}
+\end{align}
+\]</span></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>This model implies two key identities:</p>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ol type="1">
+<li><strong>Cross-sectional effect (C):</strong> <span class="math inline">\(Y_{i1} = \beta_C x_{i1} + \epsilon_{i1}\)</span></li>
+</ol>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ol start="2" type="1">
+<li><strong>Longitudinal effect (L):</strong> <span class="math inline">\(Y_{ij} - Y_{i1} = \beta_L (x_{ij} - x_{i1}) + (\epsilon_{ij} - \epsilon_{i1})\)</span> &nbsp;&nbsp;&nbsp;</li>
+</ol>
+</blockquote>
+</blockquote>
+<ul>
+<li>What’s <strong>Intraclass Correlation Coefficient (ICC)</strong>, aka <span class="math inline">\(\rho\)</span></li>
+</ul>
+<blockquote class="blockquote">
+<p>We model the outcome as: <span class="math inline">\(Y_{ij} = \beta_0 + b_i + \epsilon_{ij}\)</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><span class="math inline">\(\beta_0\)</span> : fixed effect (overall intercept)<br>
+<span class="math inline">\(b_i\)</span>: random effect (random intercept)<br>
+<span class="math inline">\(\epsilon_{ij} \sim N(0, \sigma^2)\)</span>: residual error<br>
+</p>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<p>Variance of the Outcome:</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{align}
+{Var}(Y_{ij}) &amp;= \text{Var}(b_i + \epsilon_{ij}) \\
+              &amp;= \text{Var}(b_i) + \text{Var}(\epsilon_{ij}) \\
+              &amp;= \tau^2 + \sigma^2
+\end{align}
+\]</span></p>
+<blockquote class="blockquote">
+<p>Covariance Within a Cluster:</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Cov}(Y_{ij}, Y_{ik}) &amp;= \text{Cov}(b_i + \epsilon_{ij}, b_i + \epsilon_{ik}) \\
+                           &amp;= \text{Cov}(b_i, b_i) + \text{Cov}(\epsilon_{ij}, \epsilon_{ik}) \\
+                           &amp;= \tau^2
+\end{aligned}
+\]</span></p>
+<blockquote class="blockquote">
+<p>Intraclass Correlation Coefficient (ICC)</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{aligned}
+\rho &amp;= \text{Corr}(Y_{ij}, Y_{ik}) \\
+     &amp;= \frac{\text{Cov}(Y_{ij}, Y_{ik})}{\sqrt{\text{Var}(Y_{ij}) \cdot \text{Var}(Y_{ik})}} \\
+     &amp;= \frac{\tau^2}{\tau^2 + \sigma^2} \\
+     &amp;= \frac{\text{Total Variance} - \text{Within-Cluster Variance}}{\text{Total Variance}}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><p>Consequences of ignoring clustering in data</p>
+<ul>
+<li>Regression estimates remain unbiased if missing data is minimal</li>
+<li>Standard errors, confidence intervals, and tests may be incorrect</li>
+<li>Estimates may be inefficient (i.e., more variable than necessary)</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="autocorrelation" class="level2">
+<h2 class="anchored" data-anchor-id="autocorrelation">Autocorrelation</h2>
+<ul>
+<li>“Past is prologue”</li>
+<li>“No two people are alike”</li>
+<li>Repeated measurements on a person tend to be more similar to each other than to observations from another person!</li>
+</ul>
+<hr>
+<section id="variance-covariance-structure" class="level3">
+<h3 class="anchored" data-anchor-id="variance-covariance-structure">Variance-Covariance Structure</h3>
+<ul>
+<li>Expressed in terms of common variance and correlation:
+<ul>
+<li><span class="math inline">\(Corr(Y_{ij}, Y_{ik}) = Corr(\epsilon_{ij}, \epsilon_{ik}) = \rho_{jk} = \frac{Cov(\epsilon_{ij}, \epsilon_{ik})}{var(\epsilon_{ij}) \cdot  var(\epsilon_{ik})}\)</span></li>
+<li><span class="math inline">\(Cov(\epsilon_{ij}, \epsilon_{ik}) = \rho_{jk}\sigma^2\)</span></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="empirical-correlation-matrix-for-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-correlation-matrix-for-residuals">Empirical Correlation Matrix for Residuals</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(t_{ij}\)</span></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(t_{ik}\)</span></td>
+<td>2003</td>
+<td>2004</td>
+<td>2005</td>
+<td>2006</td>
+</tr>
+<tr class="even">
+<td>2004</td>
+<td>0.983</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2005</td>
+<td>0.971</td>
+<td>0.986</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2006</td>
+<td>0.970</td>
+<td>0.977</td>
+<td>0.983</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2007</td>
+<td>0.970</td>
+<td>0.965</td>
+<td>0.963</td>
+<td>0.984</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><strong>Lag Formula:</strong> <span class="math inline">\(\text{LAG} = |t_{ij} - t_{ik}|\)</span><br>
+</p></li>
+<li><p><strong>Autocorrelation function:</strong> <span class="math inline">\(\rho(u) = Corr(r_{ij}, r_{ik}), k = j + u\)</span><br>
+</p></li>
+<li><p>The <strong>standard error</strong> of <span class="math inline">\(\rho(u)\)</span> is roughly <span class="math inline">\(\frac{1}{\sqrt{N(u)}}\)</span> where <span class="math inline">\({N(u)}\)</span> is the number of pairs of observations at lag <span class="math inline">\(u\)</span></p></li>
+<li><p>Lag 1 correlation estimates: 0.983, 0.986, 0.983, 0.984 -&gt; Pooled Lag 1 correlation estimate: 0.984 (average)<br>
+</p></li>
+<li><p>Lag 2 correlation estimates: 0.971, 0.977, 0.963 -&gt; Pooled Lag 2 correlation estimate: 0.970 (average)<br>
+</p></li>
+<li><p>Lag 3 correlation estimates: 0.970, 0.965 -&gt; Pooled Lag 3 correlation estimate: 0.966 (average)<br>
+</p></li>
+<li><p>Lag 4 correlation estimates: 0.970</p></li>
+</ul>
+<hr>
+</section>
+<section id="estimating-acf" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-acf">Estimating ACF</h3>
+<ul>
+<li>In Stata: <code>autocor</code></li>
+<li>In SAS: see <code>autocorr.sas</code></li>
+<li>Use tolerance limits to assess significance</li>
+</ul>
+<hr>
+</section>
+<section id="autocovariance-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="autocovariance-matrix">Autocovariance Matrix</h3>
+<ul>
+<li>To know if the residuals have roughly the same variance at each time-point</li>
+<li>Use <code>cov</code> option in R or Stata</li>
+<li>Norms
+<ul>
+<li>Administrative databases (e.g.&nbsp;Medicare data): large correlation in the outcomes across time even for large lags.</li>
+<li>Individual patients: Correlation decays as the time lag increases and the correlation does not appear to go to zero even at large lags.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="common-covariance-structures" class="level2">
+<h2 class="anchored" data-anchor-id="common-covariance-structures">Common Covariance Structures</h2>
+<section id="unstructured-raw" class="level3">
+<h3 class="anchored" data-anchor-id="unstructured-raw">1. Unstructured (Raw)</h3>
+<ul>
+<li>Estimate all variances and covariances</li>
+<li>Requires <span class="math inline">\(\frac{n(n+1)}{2}\)</span> parameters, in this case 4*5/2 = 10</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var₁</strong></td>
+<td>Cov(1,2)</td>
+<td>Cov(1,3)</td>
+<td>Cov(1,4)</td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Cov(2,1)</td>
+<td><strong>Var₂</strong></td>
+<td>Cov(2,3)</td>
+<td>Cov(2,4)</td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Cov(3,1)</td>
+<td>Cov(3,2)</td>
+<td><strong>Var₃</strong></td>
+<td>Cov(3,4)</td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Cov(4,1)</td>
+<td>Cov(4,2)</td>
+<td>Cov(4,3)</td>
+<td><strong>Var₄</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="compound-symmetry-exchangeable" class="level3">
+<h3 class="anchored" data-anchor-id="compound-symmetry-exchangeable">2. Compound Symmetry (Exchangeable)</h3>
+<ul>
+<li>Same variance, same correlation</li>
+<li>Only 2 parameters needed</li>
+<li>Assuming autocorrelation is not fading away by time</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="autoregressive-ar-1" class="level3">
+<h3 class="anchored" data-anchor-id="autoregressive-ar-1">3. Autoregressive (AR-1)</h3>
+<ul>
+<li>The correlation at lag <span class="math inline">\(k\)</span> is <span class="math inline">\(\rho^{|k|}\)</span></li>
+<li>Only 2 parameters needed</li>
+<li>Suitable for discrete time</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho^2\)</span></td>
+<td>Var*<span class="math inline">\(\rho^3\)</span></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<span class="math inline">\(\rho^2\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<span class="math inline">\(\rho^3\)</span></td>
+<td>Var*<span class="math inline">\(\rho^2\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="toeplitz" class="level3">
+<h3 class="anchored" data-anchor-id="toeplitz">4. Toeplitz</h3>
+<ul>
+<li>One variance; Different correlation per lag</li>
+<li>Requires <span class="math inline">\(n\)</span> parameters</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho_2\)</span></td>
+<td>Var*<span class="math inline">\(\rho_3\)</span></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>Var*<span class="math inline">\(\rho_2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<span class="math inline">\(\rho_2\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<span class="math inline">\(\rho_3\)</span></td>
+<td>Var*<span class="math inline">\(\rho_2\)</span></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="banded-structures" class="level3">
+<h3 class="anchored" data-anchor-id="banded-structures">6. Banded Structures</h3>
+<ul>
+<li>Set correlations to zero beyond lag <span class="math inline">\(k\)</span> (e.g., Banded Toeplitz 2)</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>0</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>0</td>
+<td>0</td>
+<td>Var*<span class="math inline">\(\rho\)</span></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="heteroskedastic-models" class="level3">
+<h3 class="anchored" data-anchor-id="heteroskedastic-models">7. Heteroskedastic Models</h3>
+<ul>
+<li>Allow variance to vary by time</li>
+<li>Combine with AR, Toeplitz, or CS structures</li>
+<li>Heteroskedastic toeplitz: n + (n-1) estimates</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var1</strong></td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_2}*\rho\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_3}*\rho_2\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_4}*\rho_3\)</span></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_2}*\rho\)</span></td>
+<td><strong>Var2</strong></td>
+<td><span class="math inline">\(\sqrt{Var_2}*\sqrt{Var_3}*\rho\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_2}*\sqrt{Var_4}*\rho_2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_3}*\rho_2\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_2}*\sqrt{Var_3}*\rho\)</span></td>
+<td><strong>Var3</strong></td>
+<td><span class="math inline">\(\sqrt{Var_3}*\sqrt{Var_4}*\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td><span class="math inline">\(\sqrt{Var_1}*\sqrt{Var_4}*\rho_3\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_2}*\sqrt{Var_4}*\rho_2\)</span></td>
+<td><span class="math inline">\(\sqrt{Var_3}*\sqrt{Var_4}*\rho\)</span></td>
+<td><strong>Var4</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/erhchihsu\.github\.io\/echsu");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="erhchihsu/echsu" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025 Erh-Chi Hsu. Except where otherwise noted, all text and images licensed CC-BY-NC 4.0.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

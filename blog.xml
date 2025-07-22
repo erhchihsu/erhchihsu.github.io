@@ -10,7 +10,520 @@
 <atom:link href="https://erhchihsu.github.io/echsu/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Health and Long-Term Care</description>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Thu, 26 Jun 2025 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 22 Jul 2025 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lecture 2: Autocorrelation</title>
+  <dc:creator>Erh-Chi Hsu</dc:creator>
+  <link>https://erhchihsu.github.io/echsu/posts/2025-07-22-autocorrelation/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
+<p><strong>Course:</strong> Biostat 655 – Analysis of Multilevel and Longitudinal Data<br>
+<strong>Instructors:</strong> Dr.&nbsp;Zheyu Wang, Dr.&nbsp;Ji Soo Kim</p>
+<hr>
+</section>
+<section id="essential-concepts-from-lecture-1" class="level2">
+<h2 class="anchored" data-anchor-id="essential-concepts-from-lecture-1">Essential Concepts from Lecture 1</h2>
+<ul>
+<li>Decomposition of the association between X and Y into <strong>cross-sectional</strong> and <strong>longitudinal</strong> components:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%7D%0AY_%7Bij%7D%20&amp;=%20%5Cbeta_0%20+%20%5Cbeta_1%20x_%7Bij%7D%20+%20%5Cepsilon_%7Bij%7D%20%5C%5C%0A%20%20%20%20%20%20%20&amp;=%20%5Cbeta_0%20+%20%5Cbeta_1%20(x_%7Bij%7D%20-%20x_%7Bi1%7D%20+%20x_%7Bi1%7D)%20+%20%5Cepsilon_%7Bij%7D%20%5C%5C%0A%20%20%20%20%20%20%20&amp;=%20%5Cbeta_0%20+%20%5Cbeta_1%20x_%7Bi1%7D%20+%20%5Cbeta_1%20(x_%7Bij%7D%20-%20x_%7Bi1%7D)%20+%20%5Cepsilon_%7Bij%7D%20%5C%5C%0A%20%20%20%20%20%20%20&amp;=%20%5Cbeta_0%20+%20%5Cbeta_C%20x_%7Bi1%7D%20+%20%5Cbeta_L%20(x_%7Bij%7D%20-%20x_%7Bi1%7D)%20+%20%5Cepsilon_%7Bij%7D%0A%5Cend%7Balign%7D%0A"></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>This model implies two key identities:</p>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ol type="1">
+<li><strong>Cross-sectional effect (C):</strong> <img src="https://latex.codecogs.com/png.latex?Y_%7Bi1%7D%20=%20%5Cbeta_C%20x_%7Bi1%7D%20+%20%5Cepsilon_%7Bi1%7D"></li>
+</ol>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ol start="2" type="1">
+<li><strong>Longitudinal effect (L):</strong> <img src="https://latex.codecogs.com/png.latex?Y_%7Bij%7D%20-%20Y_%7Bi1%7D%20=%20%5Cbeta_L%20(x_%7Bij%7D%20-%20x_%7Bi1%7D)%20+%20(%5Cepsilon_%7Bij%7D%20-%20%5Cepsilon_%7Bi1%7D)"> &nbsp;&nbsp;&nbsp;</li>
+</ol>
+</blockquote>
+</blockquote>
+<ul>
+<li>What’s <strong>Intraclass Correlation Coefficient (ICC)</strong>, aka <img src="https://latex.codecogs.com/png.latex?%5Crho"></li>
+</ul>
+<blockquote class="blockquote">
+<p>We model the outcome as: <img src="https://latex.codecogs.com/png.latex?Y_%7Bij%7D%20=%20%5Cbeta_0%20+%20b_i%20+%20%5Cepsilon_%7Bij%7D"></p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbeta_0"> : fixed effect (overall intercept)<br>
+<img src="https://latex.codecogs.com/png.latex?b_i">: random effect (random intercept)<br>
+<img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7Bij%7D%20%5Csim%20N(0,%20%5Csigma%5E2)">: residual error<br>
+</p>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<p>Variance of the Outcome:</p>
+</blockquote>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%7D%0A%7BVar%7D(Y_%7Bij%7D)%20&amp;=%20%5Ctext%7BVar%7D(b_i%20+%20%5Cepsilon_%7Bij%7D)%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20&amp;=%20%5Ctext%7BVar%7D(b_i)%20+%20%5Ctext%7BVar%7D(%5Cepsilon_%7Bij%7D)%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20&amp;=%20%5Ctau%5E2%20+%20%5Csigma%5E2%0A%5Cend%7Balign%7D%0A"></p>
+<blockquote class="blockquote">
+<p>Covariance Within a Cluster:</p>
+</blockquote>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Ctext%7BCov%7D(Y_%7Bij%7D,%20Y_%7Bik%7D)%20&amp;=%20%5Ctext%7BCov%7D(b_i%20+%20%5Cepsilon_%7Bij%7D,%20b_i%20+%20%5Cepsilon_%7Bik%7D)%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&amp;=%20%5Ctext%7BCov%7D(b_i,%20b_i)%20+%20%5Ctext%7BCov%7D(%5Cepsilon_%7Bij%7D,%20%5Cepsilon_%7Bik%7D)%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&amp;=%20%5Ctau%5E2%0A%5Cend%7Baligned%7D%0A"></p>
+<blockquote class="blockquote">
+<p>Intraclass Correlation Coefficient (ICC)</p>
+</blockquote>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Crho%20&amp;=%20%5Ctext%7BCorr%7D(Y_%7Bij%7D,%20Y_%7Bik%7D)%20%5C%5C%0A%20%20%20%20%20&amp;=%20%5Cfrac%7B%5Ctext%7BCov%7D(Y_%7Bij%7D,%20Y_%7Bik%7D)%7D%7B%5Csqrt%7B%5Ctext%7BVar%7D(Y_%7Bij%7D)%20%5Ccdot%20%5Ctext%7BVar%7D(Y_%7Bik%7D)%7D%7D%20%5C%5C%0A%20%20%20%20%20&amp;=%20%5Cfrac%7B%5Ctau%5E2%7D%7B%5Ctau%5E2%20+%20%5Csigma%5E2%7D%20%5C%5C%0A%20%20%20%20%20&amp;=%20%5Cfrac%7B%5Ctext%7BTotal%20Variance%7D%20-%20%5Ctext%7BWithin-Cluster%20Variance%7D%7D%7B%5Ctext%7BTotal%20Variance%7D%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<ul>
+<li><p>Consequences of ignoring clustering in data</p>
+<ul>
+<li>Regression estimates remain unbiased if missing data is minimal</li>
+<li>Standard errors, confidence intervals, and tests may be incorrect</li>
+<li>Estimates may be inefficient (i.e., more variable than necessary)</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="autocorrelation" class="level2">
+<h2 class="anchored" data-anchor-id="autocorrelation">Autocorrelation</h2>
+<ul>
+<li>“Past is prologue”</li>
+<li>“No two people are alike”</li>
+<li>Repeated measurements on a person tend to be more similar to each other than to observations from another person!</li>
+</ul>
+<hr>
+<section id="variance-covariance-structure" class="level3">
+<h3 class="anchored" data-anchor-id="variance-covariance-structure">Variance-Covariance Structure</h3>
+<ul>
+<li>Expressed in terms of common variance and correlation:
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?Corr(Y_%7Bij%7D,%20Y_%7Bik%7D)%20=%20Corr(%5Cepsilon_%7Bij%7D,%20%5Cepsilon_%7Bik%7D)%20=%20%5Crho_%7Bjk%7D%20=%20%5Cfrac%7BCov(%5Cepsilon_%7Bij%7D,%20%5Cepsilon_%7Bik%7D)%7D%7Bvar(%5Cepsilon_%7Bij%7D)%20%5Ccdot%20%20var(%5Cepsilon_%7Bik%7D)%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?Cov(%5Cepsilon_%7Bij%7D,%20%5Cepsilon_%7Bik%7D)%20=%20%5Crho_%7Bjk%7D%5Csigma%5E2"></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="empirical-correlation-matrix-for-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-correlation-matrix-for-residuals">Empirical Correlation Matrix for Residuals</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><img src="https://latex.codecogs.com/png.latex?t_%7Bij%7D"></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?t_%7Bik%7D"></td>
+<td>2003</td>
+<td>2004</td>
+<td>2005</td>
+<td>2006</td>
+</tr>
+<tr class="even">
+<td>2004</td>
+<td>0.983</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2005</td>
+<td>0.971</td>
+<td>0.986</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2006</td>
+<td>0.970</td>
+<td>0.977</td>
+<td>0.983</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2007</td>
+<td>0.970</td>
+<td>0.965</td>
+<td>0.963</td>
+<td>0.984</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><strong>Lag Formula:</strong> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BLAG%7D%20=%20%7Ct_%7Bij%7D%20-%20t_%7Bik%7D%7C"><br>
+</p></li>
+<li><p><strong>Autocorrelation function:</strong> <img src="https://latex.codecogs.com/png.latex?%5Crho(u)%20=%20Corr(r_%7Bij%7D,%20r_%7Bik%7D),%20k%20=%20j%20+%20u"><br>
+</p></li>
+<li><p>The <strong>standard error</strong> of <img src="https://latex.codecogs.com/png.latex?%5Crho(u)"> is roughly <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B%5Csqrt%7BN(u)%7D%7D"> where <img src="https://latex.codecogs.com/png.latex?%7BN(u)%7D"> is the number of pairs of observations at lag <img src="https://latex.codecogs.com/png.latex?u"></p></li>
+<li><p>Lag 1 correlation estimates: 0.983, 0.986, 0.983, 0.984 -&gt; Pooled Lag 1 correlation estimate: 0.984 (average)<br>
+</p></li>
+<li><p>Lag 2 correlation estimates: 0.971, 0.977, 0.963 -&gt; Pooled Lag 2 correlation estimate: 0.970 (average)<br>
+</p></li>
+<li><p>Lag 3 correlation estimates: 0.970, 0.965 -&gt; Pooled Lag 3 correlation estimate: 0.966 (average)<br>
+</p></li>
+<li><p>Lag 4 correlation estimates: 0.970</p></li>
+</ul>
+<hr>
+</section>
+<section id="estimating-acf" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-acf">Estimating ACF</h3>
+<ul>
+<li>In Stata: <code>autocor</code></li>
+<li>In SAS: see <code>autocorr.sas</code></li>
+<li>Use tolerance limits to assess significance</li>
+</ul>
+<hr>
+</section>
+<section id="autocovariance-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="autocovariance-matrix">Autocovariance Matrix</h3>
+<ul>
+<li>To know if the residuals have roughly the same variance at each time-point</li>
+<li>Use <code>cov</code> option in R or Stata</li>
+<li>Norms
+<ul>
+<li>Administrative databases (e.g.&nbsp;Medicare data): large correlation in the outcomes across time even for large lags.</li>
+<li>Individual patients: Correlation decays as the time lag increases and the correlation does not appear to go to zero even at large lags.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="common-covariance-structures" class="level2">
+<h2 class="anchored" data-anchor-id="common-covariance-structures">Common Covariance Structures</h2>
+<section id="unstructured-raw" class="level3">
+<h3 class="anchored" data-anchor-id="unstructured-raw">1. Unstructured (Raw)</h3>
+<ul>
+<li>Estimate all variances and covariances</li>
+<li>Requires <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bn(n+1)%7D%7B2%7D"> parameters, in this case 4*5/2 = 10</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var₁</strong></td>
+<td>Cov(1,2)</td>
+<td>Cov(1,3)</td>
+<td>Cov(1,4)</td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Cov(2,1)</td>
+<td><strong>Var₂</strong></td>
+<td>Cov(2,3)</td>
+<td>Cov(2,4)</td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Cov(3,1)</td>
+<td>Cov(3,2)</td>
+<td><strong>Var₃</strong></td>
+<td>Cov(3,4)</td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Cov(4,1)</td>
+<td>Cov(4,2)</td>
+<td>Cov(4,3)</td>
+<td><strong>Var₄</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="compound-symmetry-exchangeable" class="level3">
+<h3 class="anchored" data-anchor-id="compound-symmetry-exchangeable">2. Compound Symmetry (Exchangeable)</h3>
+<ul>
+<li>Same variance, same correlation</li>
+<li>Only 2 parameters needed</li>
+<li>Assuming autocorrelation is not fading away by time</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="autoregressive-ar-1" class="level3">
+<h3 class="anchored" data-anchor-id="autoregressive-ar-1">3. Autoregressive (AR-1)</h3>
+<ul>
+<li>The correlation at lag <img src="https://latex.codecogs.com/png.latex?k"> is <img src="https://latex.codecogs.com/png.latex?%5Crho%5E%7B%7Ck%7C%7D"></li>
+<li>Only 2 parameters needed</li>
+<li>Suitable for discrete time</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E3"></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E2"></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E3"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho%5E2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="toeplitz" class="level3">
+<h3 class="anchored" data-anchor-id="toeplitz">4. Toeplitz</h3>
+<ul>
+<li>One variance; Different correlation per lag</li>
+<li>Requires <img src="https://latex.codecogs.com/png.latex?n"> parameters</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_3"></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_2"></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_3"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho_2"></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="banded-structures" class="level3">
+<h3 class="anchored" data-anchor-id="banded-structures">6. Banded Structures</h3>
+<ul>
+<li>Set correlations to zero beyond lag <img src="https://latex.codecogs.com/png.latex?k"> (e.g., Banded Toeplitz 2)</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td>0</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td>0</td>
+<td>0</td>
+<td>Var*<img src="https://latex.codecogs.com/png.latex?%5Crho"></td>
+<td><strong>Var</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="heteroskedastic-models" class="level3">
+<h3 class="anchored" data-anchor-id="heteroskedastic-models">7. Heteroskedastic Models</h3>
+<ul>
+<li>Allow variance to vary by time</li>
+<li>Combine with AR, Toeplitz, or CS structures</li>
+<li>Heteroskedastic toeplitz: n + (n-1) estimates</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Time1</th>
+<th>Time2</th>
+<th>Time3</th>
+<th>Time4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time1</td>
+<td><strong>Var1</strong></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_2%7D*%5Crho"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_3%7D*%5Crho_2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_4%7D*%5Crho_3"></td>
+</tr>
+<tr class="even">
+<td>Time2</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_2%7D*%5Crho"></td>
+<td><strong>Var2</strong></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_2%7D*%5Csqrt%7BVar_3%7D*%5Crho"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_2%7D*%5Csqrt%7BVar_4%7D*%5Crho_2"></td>
+</tr>
+<tr class="odd">
+<td>Time3</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_3%7D*%5Crho_2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_2%7D*%5Csqrt%7BVar_3%7D*%5Crho"></td>
+<td><strong>Var3</strong></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_3%7D*%5Csqrt%7BVar_4%7D*%5Crho"></td>
+</tr>
+<tr class="even">
+<td>Time4</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_1%7D*%5Csqrt%7BVar_4%7D*%5Crho_3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_2%7D*%5Csqrt%7BVar_4%7D*%5Crho_2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BVar_3%7D*%5Csqrt%7BVar_4%7D*%5Crho"></td>
+<td><strong>Var4</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Biostat 655</category>
+  <guid>https://erhchihsu.github.io/echsu/posts/2025-07-22-autocorrelation/</guid>
+  <pubDate>Tue, 22 Jul 2025 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Lecture 3 Design Based Regression Analysis</title>
   <dc:creator>Erh-Chi Hsu</dc:creator>

@@ -25,7 +25,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Lecture 3 Design Based Regression Analysis\n\n\n\n\n\n\nPFRH 712\n\n\n\nIntroduction to design-based regression approaches for large population survey data using R, including linear, logistic, and log-binomial models, with a focus on correct model specification, diagnostics, and interpretation.\n\n\n\n\n\nJun 26, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 2 Variance Estimation\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of variance estimation for complex survey from PFRH 712\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1: Overview of Multilevel and Longitudinal Data\n\n\n\n\n\n\nBiostat 655\n\n\n\nSummary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1 Complex Survey Data 101\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of the introduction to Complex Survey Data from PFRH 712\n\n\n\n\n\nMay 29, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
+    "text": "Lecture 2: Autocorrelation\n\n\n\n\n\n\nBiostat 655\n\n\n\nUnderstanding autocorrelation and variance-covariance structures in longitudinal data\n\n\n\n\n\nJul 22, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 3 Design Based Regression Analysis\n\n\n\n\n\n\nPFRH 712\n\n\n\nIntroduction to design-based regression approaches for large population survey data using R, including linear, logistic, and log-binomial models, with a focus on correct model specification, diagnostics, and interpretation.\n\n\n\n\n\nJun 26, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 2 Variance Estimation\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of variance estimation for complex survey from PFRH 712\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1: Overview of Multilevel and Longitudinal Data\n\n\n\n\n\n\nBiostat 655\n\n\n\nSummary of the introduction to multilevel modeling and longitudinal data analysis from Biostat 655\n\n\n\n\n\nJun 4, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nLecture 1 Complex Survey Data 101\n\n\n\n\n\n\nPFRH 712\n\n\n\nSummary of the introduction to Complex Survey Data from PFRH 712\n\n\n\n\n\nMay 29, 2025\n\n\nErh-Chi Hsu\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2025-05-29-complex_survey_101/index.html",
@@ -292,5 +292,75 @@
     "title": "Lecture 3 Design Based Regression Analysis",
     "section": "References",
     "text": "References\n\nLecture slides by Dr. Saifuddin Ahmed, PFRH 712 (2025)\nLumley, T. (2010). Complex Surveys: A Guide to Analysis Using R. Wiley.\nHarrell, F. (2015). Regression Modeling Strategies. Springer.\nHosmer, D., Lemeshow, S., & Sturdivant, R. (2013). Applied Logistic Regression. Wiley.\nR packages: survey, lmtest, ResourceSelection, ggplot2, srvyr"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#essential-concepts",
+    "href": "posts/2025-07-22-autocorrelation/index.html#essential-concepts",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "",
+    "text": "Decomposition of the association between X and Y into cross-sectional and longitudinal components:\n\n\\[\n\\begin{align}\nY_{ij} &= \\beta_0 + \\beta_1 x_{ij} + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_1 (x_{ij} - x_{i1} + x_{i1}) + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_1 x_{i1} + \\beta_1 (x_{ij} - x_{i1}) + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_C x_{i1} + \\beta_L (x_{ij} - x_{i1}) + \\epsilon_{ij}\n\\end{align}\n\\]\n\n\nThis model implies two key identities:\n\n\n\n\n\nCross-sectional effect (C): \\(Y_{i1} = \\beta_C x_{i1} + \\epsilon_{i1}\\)\n\n\n\n\n\n\nLongitudinal effect (L): \\(Y_{ij} - Y_{i1} = \\beta_L (x_{ij} - x_{i1}) + (\\epsilon_{ij} - \\epsilon_{i1})\\)    \n\n\n\n\nWhat’s Intraclass Correlation Coefficient (ICC), aka \\(\\rho\\)\n\n\nWe model the outcome as: \\(Y_{ij} = \\beta_0 + b_i + \\epsilon_{ij}\\)\n\n\n\n\\(\\beta_0\\) : fixed effect (overall intercept)\n\\(b_i\\): random effect (random intercept)\n\\(\\epsilon_{ij} \\sim N(0, \\sigma^2)\\): residual error\n\n\n\n\nVariance of the Outcome:\n\n\\[\n\\begin{align}\n{Var}(Y_{ij}) &= \\text{Var}(b_i + \\epsilon_{ij}) \\\\\n              &= \\text{Var}(b_i) + \\text{Var}(\\epsilon_{ij}) \\\\\n              &= \\tau^2 + \\sigma^2\n\\end{align}\n\\]\n\nCovariance Within a Cluster:\n\n\\[\n\\begin{aligned}\n\\text{Cov}(Y_{ij}, Y_{ik}) &= \\text{Cov}(b_i + \\epsilon_{ij}, b_i + \\epsilon_{ik}) \\\\\n                           &= \\text{Cov}(b_i, b_i) + \\text{Cov}(\\epsilon_{ij}, \\epsilon_{ik}) \\\\\n                           &= \\tau^2\n\\end{aligned}\n\\]\n\nIntraclass Correlation Coefficient (ICC)\n\n\\[\n\\begin{aligned}\n\\rho &= \\text{Corr}(Y_{ij}, Y_{ik}) \\\\\n     &= \\frac{\\text{Cov}(Y_{ij}, Y_{ik})}{\\sqrt{\\text{Var}(Y_{ij}) \\cdot \\text{Var}(Y_{ik})}} \\\\\n     &= \\frac{\\tau^2}{\\tau^2 + \\sigma^2} \\\\\n     &= \\frac{\\text{Total Variance} - \\text{Within-Cluster Variance}}{\\text{Total Variance}}\n\\end{aligned}\n\\]\n\nConsequences of ignoring clustering in data\n\nRegression estimates remain unbiased if missing data is minimal\nStandard errors, confidence intervals, and tests may be incorrect\nEstimates may be inefficient (i.e., more variable than necessary)"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#autocorrelation",
+    "href": "posts/2025-07-22-autocorrelation/index.html#autocorrelation",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Autocorrelation",
+    "text": "Autocorrelation\n\n“Past is prologue”\n“No two people are alike”\nRepeated measurements on a person tend to be more similar to each other than to observations from another person!\n\n\n\nVariance-Covariance Structure\n\nExpressed in terms of common variance and correlation:\n\n\\(Corr(Y_{ij}, Y_{ik}) = Corr(\\epsilon_{ij}, \\epsilon_{ik}) = \\rho_{jk} = \\frac{Cov(\\epsilon_{ij}, \\epsilon_{ik})}{var(\\epsilon_{ij}) \\cdot  var(\\epsilon_{ik})}\\)\n\\(Cov(\\epsilon_{ij}, \\epsilon_{ik}) = \\rho_{jk}\\sigma^2\\)\n\n\n\n\n\nEmpirical Correlation Matrix for Residuals\n\n\n\n\n\\(t_{ij}\\)\n\n\n\n\n\n\n\n\\(t_{ik}\\)\n2003\n2004\n2005\n2006\n\n\n2004\n0.983\n\n\n\n\n\n2005\n0.971\n0.986\n\n\n\n\n2006\n0.970\n0.977\n0.983\n\n\n\n2007\n0.970\n0.965\n0.963\n0.984\n\n\n\n\nLag Formula: \\(\\text{LAG} = |t_{ij} - t_{ik}|\\)\n\nAutocorrelation function: \\(\\rho(u) = Corr(r_{ij}, r_{ik}), k = j + u\\)\n\nThe standard error of \\(\\rho(u)\\) is roughly \\(\\frac{1}{\\sqrt{N(u)}}\\) where \\({N(u)}\\) is the number of pairs of observations at lag \\(u\\)\nLag 1 correlation estimates: 0.983, 0.986, 0.983, 0.984 -&gt; Pooled Lag 1 correlation estimate: 0.984 (average)\n\nLag 2 correlation estimates: 0.971, 0.977, 0.963 -&gt; Pooled Lag 2 correlation estimate: 0.970 (average)\n\nLag 3 correlation estimates: 0.970, 0.965 -&gt; Pooled Lag 3 correlation estimate: 0.966 (average)\n\nLag 4 correlation estimates: 0.970\n\n\n\n\nEstimating ACF\n\nIn Stata: autocor\nIn SAS: see autocorr.sas\nUse tolerance limits to assess significance\n\n\n\n\nAutocovariance Matrix\n\nTo know if the residuals have roughly the same variance at each time-point\nUse cov option in R or Stata\nNorms\n\nAdministrative databases (e.g. Medicare data): large correlation in the outcomes across time even for large lags.\nIndividual patients: Correlation decays as the time lag increases and the correlation does not appear to go to zero even at large lags."
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#variance-covariance-structure",
+    "href": "posts/2025-07-22-autocorrelation/index.html#variance-covariance-structure",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Variance-Covariance Structure",
+    "text": "Variance-Covariance Structure\n\nExpressed in terms of common variance and correlation:\n\n\\(Corr(Y_{ij}, Y_{ik}) = Corr(\\epsilon_{ij}, \\epsilon_{ik}) = \\rho_{jk} = \\frac{Cov(\\epsilon_{ij}, \\epsilon_{ik})}{var(\\epsilon_{ij}) \\cdot  var(\\epsilon_{ik})}\\)\n\\(Cov(\\epsilon_{ij}, \\epsilon_{ik}) = \\rho_{jk}\\sigma^2\\)"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#empirical-correlation-matrix-for-residuals",
+    "href": "posts/2025-07-22-autocorrelation/index.html#empirical-correlation-matrix-for-residuals",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Empirical Correlation Matrix for Residuals",
+    "text": "Empirical Correlation Matrix for Residuals\n\n\n\n\nt_ij\n\n\n\n\n\n\n\nt_ik\n2003\n2004\n2005\n2006\n\n\n2004\n0.983\n\n\n\n\n\n2005\n0.971\n0.986\n\n\n\n\n2006\n0.970\n0.977\n0.983\n\n\n\n2007\n0.970\n0.965\n0.963\n0.984\n\n\n\nLag Formula: \\(\\text{LAG} = |t_{ij} - t_{ik}|\\)\nAutocorrelation function: \\(\\rho(u) = Corr(r_{ij}, r_{ik}), k = j + u\\)\nThe standard error of \\(\\rho(u)\\) is roughly \\(\\frac{1}{\\sqrt{N(u)}}\\) where \\({N(u)}\\) is the number of pairs of observations at lag \\(u\\)\nLag 1 correlation estimates: 0.983, 0.986, 0.983, 0.984 -&gt; Pooled Lag 1 correlation estimate: 0.984 (average)\nLag 2 correlation estimates: 0.971, 0.977, 0.963 -&gt; Pooled Lag 2 correlation estimate: 0.970 (average)\nLag 3 correlation estimates: 0.970, 0.965 -&gt; Pooled Lag 3 correlation estimate: 0.966 (average)\nLag 4 correlation estimates: 0.970"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#estimating-acf",
+    "href": "posts/2025-07-22-autocorrelation/index.html#estimating-acf",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Estimating ACF",
+    "text": "Estimating ACF\n\nIn Stata: autocor\nIn SAS: see autocorr.sas\nUse tolerance limits to assess significance"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#autocovariance-matrix",
+    "href": "posts/2025-07-22-autocorrelation/index.html#autocovariance-matrix",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Autocovariance Matrix",
+    "text": "Autocovariance Matrix\n\nTo know if the residuals have roughly the same variance at each time-point\nUse cov option in R or Stata\nNorms\n\nAdministrative databases (e.g. Medicare data): large correlation in the outcomes across time even for large lags.\nIndividual patients: Correlation decays as the time lag increases and the correlation does not appear to go to zero even at large lags."
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#common-covariance-structures",
+    "href": "posts/2025-07-22-autocorrelation/index.html#common-covariance-structures",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Common Covariance Structures",
+    "text": "Common Covariance Structures\n\n1. Unstructured (Raw)\n\nEstimate all variances and covariances\nRequires \\(\\frac{n(n+1)}{2}\\) parameters, in this case 4*5/2 = 10\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar₁\nCov(1,2)\nCov(1,3)\nCov(1,4)\n\n\nTime2\nCov(2,1)\nVar₂\nCov(2,3)\nCov(2,4)\n\n\nTime3\nCov(3,1)\nCov(3,2)\nVar₃\nCov(3,4)\n\n\nTime4\nCov(4,1)\nCov(4,2)\nCov(4,3)\nVar₄\n\n\n\n\n\n\n2. Compound Symmetry (Exchangeable)\n\nSame variance, same correlation\nOnly 2 parameters needed\nAssuming autocorrelation is not fading away by time\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\n\n\nTime2\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\n\n\nTime3\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\n\n\nTime4\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\nVar*\\(\\rho\\)\nVar\n\n\n\n\n\n\n3. Autoregressive (AR-1)\n\nThe correlation at lag \\(k\\) is \\(\\rho^{|k|}\\)\nOnly 2 parameters needed\nSuitable for discrete time\n\n\n\n\n\n\n\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho^2\\)\nVar*\\(\\rho^3\\)\n\n\nTime2\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho^2\\)\n\n\nTime3\nVar*\\(\\rho^2\\)\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\n\n\nTime4\nVar*\\(\\rho^3\\)\nVar*\\(\\rho^2\\)\nVar*\\(\\rho\\)\nVar\n\n\n\n\n\n\n4. Toeplitz\n\nOne variance; Different correlation per lag\nRequires \\(n\\) parameters\n\n\n\n\n\n\n\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho_2\\)\nVar*\\(\\rho_3\\)\n\n\nTime2\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\nVar*\\(\\rho_2\\)\n\n\nTime3\nVar*\\(\\rho_2\\)\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\n\n\nTime4\nVar*\\(\\rho_3\\)\nVar*\\(\\rho_2\\)\nVar*\\(\\rho\\)\nVar\n\n\n\n\n\n\n6. Banded Structures\n\nSet correlations to zero beyond lag \\(k\\) (e.g., Banded Toeplitz 2)\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar\nVar*\\(\\rho\\)\n0\n0\n\n\nTime2\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\n0\n\n\nTime3\n0\nVar*\\(\\rho\\)\nVar\nVar*\\(\\rho\\)\n\n\nTime4\n0\n0\nVar*\\(\\rho\\)\nVar\n\n\n\n\n\n\n7. Heteroskedastic Models\n\nAllow variance to vary by time\nCombine with AR, Toeplitz, or CS structures\nHeteroskedastic toeplitz: n + (n-1) estimates\n\n\n\n\n\n\n\n\n\n\n\n\nTime1\nTime2\nTime3\nTime4\n\n\n\n\nTime1\nVar1\n\\(\\sqrt{Var_1}*\\sqrt{Var_2}*\\rho\\)\n\\(\\sqrt{Var_1}*\\sqrt{Var_3}*\\rho_2\\)\n\\(\\sqrt{Var_1}*\\sqrt{Var_4}*\\rho_3\\)\n\n\nTime2\n\\(\\sqrt{Var_1}*\\sqrt{Var_2}*\\rho\\)\nVar2\n\\(\\sqrt{Var_2}*\\sqrt{Var_3}*\\rho\\)\n\\(\\sqrt{Var_2}*\\sqrt{Var_4}*\\rho_2\\)\n\n\nTime3\n\\(\\sqrt{Var_1}*\\sqrt{Var_3}*\\rho_2\\)\n\\(\\sqrt{Var_2}*\\sqrt{Var_3}*\\rho\\)\nVar3\n\\(\\sqrt{Var_3}*\\sqrt{Var_4}*\\rho\\)\n\n\nTime4\n\\(\\sqrt{Var_1}*\\sqrt{Var_4}*\\rho_3\\)\n\\(\\sqrt{Var_2}*\\sqrt{Var_4}*\\rho_2\\)\n\\(\\sqrt{Var_3}*\\sqrt{Var_4}*\\rho\\)\nVar4"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html",
+    "href": "posts/2025-07-22-autocorrelation/index.html",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "",
+    "text": "Course: Biostat 655 – Analysis of Multilevel and Longitudinal Data\nInstructors: Dr. Zheyu Wang, Dr. Ji Soo Kim"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#essential-concepts-from-lecture-1",
+    "href": "posts/2025-07-22-autocorrelation/index.html#essential-concepts-from-lecture-1",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "Essential Concepts from Lecture 1",
+    "text": "Essential Concepts from Lecture 1\n\nDecomposition of the association between X and Y into cross-sectional and longitudinal components:\n\n\\[\n\\begin{align}\nY_{ij} &= \\beta_0 + \\beta_1 x_{ij} + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_1 (x_{ij} - x_{i1} + x_{i1}) + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_1 x_{i1} + \\beta_1 (x_{ij} - x_{i1}) + \\epsilon_{ij} \\\\\n       &= \\beta_0 + \\beta_C x_{i1} + \\beta_L (x_{ij} - x_{i1}) + \\epsilon_{ij}\n\\end{align}\n\\]\n\n\nThis model implies two key identities:\n\n\n\n\n\nCross-sectional effect (C): \\(Y_{i1} = \\beta_C x_{i1} + \\epsilon_{i1}\\)\n\n\n\n\n\n\nLongitudinal effect (L): \\(Y_{ij} - Y_{i1} = \\beta_L (x_{ij} - x_{i1}) + (\\epsilon_{ij} - \\epsilon_{i1})\\)    \n\n\n\n\nWhat’s Intraclass Correlation Coefficient (ICC), aka \\(\\rho\\)\n\n\nWe model the outcome as: \\(Y_{ij} = \\beta_0 + b_i + \\epsilon_{ij}\\)\n\n\n\n\\(\\beta_0\\) : fixed effect (overall intercept)\n\\(b_i\\): random effect (random intercept)\n\\(\\epsilon_{ij} \\sim N(0, \\sigma^2)\\): residual error\n\n\n\n\nVariance of the Outcome:\n\n\\[\n\\begin{align}\n{Var}(Y_{ij}) &= \\text{Var}(b_i + \\epsilon_{ij}) \\\\\n              &= \\text{Var}(b_i) + \\text{Var}(\\epsilon_{ij}) \\\\\n              &= \\tau^2 + \\sigma^2\n\\end{align}\n\\]\n\nCovariance Within a Cluster:\n\n\\[\n\\begin{aligned}\n\\text{Cov}(Y_{ij}, Y_{ik}) &= \\text{Cov}(b_i + \\epsilon_{ij}, b_i + \\epsilon_{ik}) \\\\\n                           &= \\text{Cov}(b_i, b_i) + \\text{Cov}(\\epsilon_{ij}, \\epsilon_{ik}) \\\\\n                           &= \\tau^2\n\\end{aligned}\n\\]\n\nIntraclass Correlation Coefficient (ICC)\n\n\\[\n\\begin{aligned}\n\\rho &= \\text{Corr}(Y_{ij}, Y_{ik}) \\\\\n     &= \\frac{\\text{Cov}(Y_{ij}, Y_{ik})}{\\sqrt{\\text{Var}(Y_{ij}) \\cdot \\text{Var}(Y_{ik})}} \\\\\n     &= \\frac{\\tau^2}{\\tau^2 + \\sigma^2} \\\\\n     &= \\frac{\\text{Total Variance} - \\text{Within-Cluster Variance}}{\\text{Total Variance}}\n\\end{aligned}\n\\]\n\nConsequences of ignoring clustering in data\n\nRegression estimates remain unbiased if missing data is minimal\nStandard errors, confidence intervals, and tests may be incorrect\nEstimates may be inefficient (i.e., more variable than necessary)"
+  },
+  {
+    "objectID": "posts/2025-07-22-autocorrelation/index.html#course-information",
+    "href": "posts/2025-07-22-autocorrelation/index.html#course-information",
+    "title": "Lecture 2: Autocorrelation",
+    "section": "",
+    "text": "Course: Biostat 655 – Analysis of Multilevel and Longitudinal Data\nInstructors: Dr. Zheyu Wang, Dr. Ji Soo Kim"
   }
 ]
