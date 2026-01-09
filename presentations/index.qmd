@@ -1,0 +1,42 @@
+---
+title: "Presentations"
+format:
+  html:
+    toc: false
+    number-sections: false
+    page-layout: article
+---
+
+As lead/presenting author:
+
+## 2025
+
+**Personal Care Aide Staffing in U.S. Residential Care Communities: The Role of Aide Training Hours, Training Reimbursement, and Organizational Structures** </br>
+With Katherine Kennedy and David Mohr </br>
+Late-breaking presentation, 2025 Annual Scientific Meeting of the Gerontological Society of America. Boston, MA, United States. </br>
+[View slides](/presentations/11-12-25_1000_Hsu.pdf)
+
+**Technology Activities and Cognitive Trajectories Among Community-Dwelling Older Adults: National Health and Aging Trends Study** </br>
+With Erin Spaulding and Eric Jutkowitz </br>
+Poster presentation, 2025 Annual Scientific Meeting of the Gerontological Society of America. Boston, MA, United States. </br>
+[View poster (PDF)](/presentations/GSA2025_techcog_poster.pdf)
+
+**Changes in Long-Term Care Markets: Assisted Living Capacity and the Prevalence of Nursing Home Residents with Dementia from 2019 to 2021**  
+With Gauri Gadkari, Jennifer Bunker, Lindsey Smith, Cassandra Hua, Eric Jutkowitz, and Kali S. Thomas  
+Poster presentation, AcademyHealth Annual Research Meeting, Minneapolis, MN, June 8, 2025.  
+[View handout (html)](/handouts/poster_handout.html)  
+[View poster (PDF)](/presentations/2025_ARM_Poster.pdf)
+
+> We examined how changes in assisted living (AL) capacity — specifically within 15 miles of each nursing home — influence the prevalence of dementia among NH residents across the U.S. from 2019 to 2021. We found that increasing general AL capacity was associated with a modest but statistically significant reduction in NH dementia prevalence, while memory care AL showed no significant effect, possibly due to higher costs. These findings support the role of AL in delaying or diverting NH entry for individuals with dementia.
+
+---
+
+## 2024
+
+To be added
+
+---
+
+## 2023
+
+To be added

@@ -1,0 +1,43 @@
+---
+title: "Publications"
+format:
+  html:
+    toc: false
+    number-sections: false
+    page-layout: article
+---
+
+Click “[PDF]” to download each paper.
+
+---
+
+## 2026
+
+Hsu, E. C., Gadkari, G., Bunker, J., Smith, L., Hua, C. L., Jutkowitz, E., & Thomas, K. S. (in press). Changes in Long-Term Care Markets: Assisted Living Capacity and the Prevalence of Nursing Home Residents with Dementia from 2019 to 2023. JAMDA.
+
+Kim, S. H., Chaveza, C., Hinneha, T., Hsu, E.C., Kassaa, G., Won, S., & Byiringiro, S. (in press). Challenging the narrative to reimagine health disparities research and education: Perspectives from international scholars. Nurse Education Today, 106971.
+
+---
+
+## 2025
+
+Jutkowitz, E., Gadkari, G., Hsu, E. C., Tunalilar, O., Smith, L., Hua, C. L., ... & Thomas, K. S. (2025). Trends in assisted living and memory care supply from 2019 to 2023. JAMDA,26(12), 105890. <https://doi.org/10.1016/j.jamda.2025.105890> [View PDF](publications/Jutkowitz_et_al_2025_AL_Trend.pdf)
+
+Kennedy, K. A., Mohr, D. C., & Hsu, E. C. (2025). Personal Care Aide Staffing in US Residential Care Communities: The Role of Aide Training Hours, Training Reimbursement, and Organizational Structures. J Appl Gerontol, 07334648251408183.<https://doi.org/10.1177/07334648251408183> [View PDF](publications/Kennedy_et_al_2025_PCA_staffing.pdf)
+
+Hsu, E. C., Spaulding, E. M., & Jutkowitz, E. (2025). Technology Activities and Cognitive Trajectories Among Community-Dwelling Older Adults: National Health and Aging Trends Study.JMIR Aging,8, e77227. <https://aging.jmir.org/2025/1/e77227> [View PDF](publications/Hsu_et_al_2025_techcog.pdf)
+
+Kim, S. H., Kim, C., Hsu, E. C., Berger, Z., Han, H. R., Koirala, B., ... & Wright, R. (2025). End-of-life care among Koreans in critical care and community-dwelling Korean Americans: A cross-cultural scoping review. Palliative & Supportive Care,23, e210. <https://doi.org/10.1017/S1478951525101090> [View PDF](publications/Kim_et_al_2025_Korean.pdf)
+
+Li, J., He, R., Hsu, E. C., & Li, J. (2025). Network Analysis of Key Instrumental Activities of Daily Living and Cognitive Domains for Targeted Intervention in US Older Adults Without Dementia: Cross-Sectional Study. JMIR Aging, 8. <https://doi.org/10.2196/67632> [View PDF](publications/Li_et_al_2025_network.pdf)
+
+Hsu, E. C., Tsai, J. H.-C., Chim, K., & Spigner, C. (2025). Multi-level factors of Chinese American family caregivers of individuals with dementia during COVID-19. Geriatric Nursing, 62, 200–206. <https://doi.org/10.1016/J.GERINURSE.2025.01.041> [View PDF](publications/Hsu_et_al_2025_Family_Caregiver.pdf)
+
+Huang, J., Spira, A. P., Perrin, N. A., Ellis, A., Hsu, E. C., Kaufmann, C. N., & Li, J. (2025). Latent classes of sleep problems and subjective cognitive decline among middle-aged and older adults in the United States. Archives of Gerontology and Geriatrics, 129, 105657. <https://doi.org/10.1016/J.ARCHGER.2024.105657>  [View PDF](publications/Jing_et_al_2025_Latent_Sleep.pdf)
+
+---
+
+## 2023
+
+Sabbatini, A. K., Parrish, C., Duber, H. C., Weaver, M., & Hsu, E. C. (2023). Report to the Legislature Emergency Cardiac and Stroke System Assessment. <https://app.leg.wa.gov/ReportsToTheLegislature/Home/GetPDF?fileName=ECS%20Report%20(Chapter%2058%20Laws%20of%202022)_8c782540-b0f4-48b7-813d-fe1155f84d2a.pdf> [View PDF](publications/ecs_evaluation_report.pdf)
+

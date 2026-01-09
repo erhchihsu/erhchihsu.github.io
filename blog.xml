@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Erh-Chi Hsu</title>
-<link>https://erhchihsu.github.io/echsu/blog.html</link>
-<atom:link href="https://erhchihsu.github.io/echsu/blog.xml" rel="self" type="application/rss+xml"/>
+<link>https://erhchihsu.github.io/blog.html</link>
+<atom:link href="https://erhchihsu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Health and Long-Term Care</description>
 <generator>quarto-1.4.554</generator>
 <lastBuildDate>Tue, 22 Jul 2025 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Lecture 2: Autocorrelation</title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-07-22-autocorrelation/</link>
+  <link>https://erhchihsu.github.io/posts/2025-07-22-autocorrelation/</link>
   <description><![CDATA[ 
 
 
@@ -521,13 +521,13 @@
 
  ]]></description>
   <category>Biostat 655</category>
-  <guid>https://erhchihsu.github.io/echsu/posts/2025-07-22-autocorrelation/</guid>
+  <guid>https://erhchihsu.github.io/posts/2025-07-22-autocorrelation/</guid>
   <pubDate>Tue, 22 Jul 2025 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Lecture 3 Design Based Regression Analysis</title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/</link>
+  <link>https://erhchihsu.github.io/posts/2025-06-26-design-based-regression-analysis/</link>
   <description><![CDATA[ 
 
 
@@ -697,7 +697,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://erhchihsu.github.io/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -717,7 +717,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://erhchihsu.github.io/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -759,7 +759,7 @@ font-style: inherit;">4</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://erhchihsu.github.io/posts/2025-06-26-design-based-regression-analysis/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -931,22 +931,22 @@ font-style: inherit;">coef</span>(model_poisson))</span></code></pre></div>
 
  ]]></description>
   <category>PFRH 712</category>
-  <guid>https://erhchihsu.github.io/echsu/posts/2025-06-26-design-based-regression-analysis/</guid>
+  <guid>https://erhchihsu.github.io/posts/2025-06-26-design-based-regression-analysis/</guid>
   <pubDate>Thu, 26 Jun 2025 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-06-04-variance_estimation/</link>
+  <link>https://erhchihsu.github.io/posts/2025-06-04-variance_estimation/</link>
   <description><![CDATA[ undefined ]]></description>
   <category>PFRH 712</category>
-  <guid>https://erhchihsu.github.io/echsu/posts/2025-06-04-variance_estimation/</guid>
+  <guid>https://erhchihsu.github.io/posts/2025-06-04-variance_estimation/</guid>
   <pubDate>Wed, 04 Jun 2025 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Lecture 1: Overview of Multilevel and Longitudinal Data</title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-06-04-/</link>
+  <link>https://erhchihsu.github.io/posts/2025-06-04-/</link>
   <description><![CDATA[ 
 
 
@@ -1148,16 +1148,16 @@ font-style: inherit;">coef</span>(model_poisson))</span></code></pre></div>
 
  ]]></description>
   <category>Biostat 655</category>
-  <guid>https://erhchihsu.github.io/echsu/posts/2025-06-04-/</guid>
+  <guid>https://erhchihsu.github.io/posts/2025-06-04-/</guid>
   <pubDate>Wed, 04 Jun 2025 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title></title>
   <dc:creator>Erh-Chi Hsu</dc:creator>
-  <link>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/</link>
+  <link>https://erhchihsu.github.io/posts/2025-05-29-complex_survey_101/</link>
   <description><![CDATA[ undefined ]]></description>
   <category>PFRH 712</category>
-  <guid>https://erhchihsu.github.io/echsu/posts/2025-05-29-complex_survey_101/</guid>
+  <guid>https://erhchihsu.github.io/posts/2025-05-29-complex_survey_101/</guid>
   <pubDate>Thu, 29 May 2025 04:00:00 GMT</pubDate>
 </item>
 </channel>
