@@ -13,9 +13,9 @@ Click “[PDF]” to download each paper.
 
 ## 2026
 
-Hsu, E. C., Gadkari, G., Bunker, J., Smith, L., Hua, C. L., Jutkowitz, E., & Thomas, K. S. (in press). Changes in Long-Term Care Markets: Assisted Living Capacity and the Prevalence of Nursing Home Residents with Dementia from 2019 to 2023. JAMDA.
+Hsu, E. C., Gadkari, G., Bunker, J., Smith, L., Hua, C. L., Jutkowitz, E., & Thomas, K. S. (2026). Changes in Long-Term Care Markets: Assisted Living Capacity and the Prevalence of Nursing Home Residents with Dementia from 2019 to 2023. JAMDA, 27(3), 106068. <https://doi.org/10.1016/j.jamda.2025.106068> [View PDF](/publications/Hsu_et_al_2026_gis.pdf)
 
-Kim, S. H., Chaveza, C., Hinneha, T., Hsu, E.C., Kassaa, G., Won, S., & Byiringiro, S. (in press). Challenging the narrative to reimagine health disparities research and education: Perspectives from international scholars. Nurse Education Today, 106971.
+Kim, S. H., Chaveza, C., Hinneha, T., Hsu, E.C., Kassaa, G., Won, S., & Byiringiro, S. (2026). Challenging the narrative to reimagine health disparities research and education: Perspectives from international scholars. Nurse Education Today, 106971. <https://doi.org/10.1016/j.nedt.2025.106971> [View PDF](/publications/Kim_nurse_edu_2026.pdf)
 
 ---
 
@@ -33,7 +33,7 @@ Li, J., He, R., Hsu, E. C., & Li, J. (2025). Network Analysis of Key Instrumenta
 
 Hsu, E. C., Tsai, J. H.-C., Chim, K., & Spigner, C. (2025). Multi-level factors of Chinese American family caregivers of individuals with dementia during COVID-19. Geriatric Nursing, 62, 200–206. <https://doi.org/10.1016/J.GERINURSE.2025.01.041> [View PDF](/publications/Hsu_et_al_2025_Family_Caregiver.pdf)
 
-Huang, J., Spira, A. P., Perrin, N. A., Ellis, A., Hsu, E. C., Kaufmann, C. N., & Li, J. (2025). Latent classes of sleep problems and subjective cognitive decline among middle-aged and older adults in the United States. Archives of Gerontology and Geriatrics, 129, 105657. <https://doi.org/10.1016/J.ARCHGER.2024.105657>  [View PDF](/publications/Jing_et_al_2025_Latent_Sleep.pdf)
+Huang, J., Spira, A. P., Perrin, N. A., Ellis, A., Hsu, E. C., Kaufmann, C. N., & Li, J. (2025). Latent classes of sleep problems and subjective cognitive decline among middle-aged and older adults in the United States. Archives of Gerontology and Geriatrics, 129, 105657. <https://doi.org/10.1016/J.ARCHGER.2024.105657> [View PDF](/publications/Jing_et_al_2025_Latent_Sleep.pdf)
 
 ---
 
